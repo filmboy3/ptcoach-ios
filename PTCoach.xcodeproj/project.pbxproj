@@ -10,6 +10,7 @@
 		01CDE535B37B0C8AA0C2740C /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B55BFB73BE3DCCDBD2A3FF /* LibraryView.swift */; };
 		03A8462076D8535CD467E330 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92069F898AFA0031C8CBBD77 /* CoreVideo.framework */; };
 		0C37B5420586E90E4450C2A5 /* ExerciseTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */; };
+		0DC955E0C293026FF04EF8CC /* YOLOExerciseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB316890BD9349D3A4C82B /* YOLOExerciseConverter.swift */; };
 		183527CAE685C0D9A1909603 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CBE22B62AEC24DD4407759 /* AVFoundation.framework */; };
 		183EEA25058505B6A8633632 /* AngleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE7A1884331E39B28EFF393 /* AngleEngine.swift */; };
 		1C8FB782CE241C265DF9D5FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB3D591C929EEFB7498BC71 /* SwiftUI.framework */; };
@@ -23,6 +24,7 @@
 		407B8E8CDC91A4AB12C07853 /* PoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F2ED3371F399E0058E263 /* PoseProvider.swift */; };
 		4619CA817D3B94FE22E05BEE /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2C6A34D6561BEEB2151C90 /* CoreMedia.framework */; };
 		528F55FF2B73426AE78C8B97 /* PTCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A59FAEF812AE3408FDCF33 /* PTCoachApp.swift */; };
+		5306D3103B0011A966FA2514 /* ExerciseProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04115ECA5CA080B3DF64F30C /* ExerciseProcessor.swift */; };
 		53A15820C50D8723E03CC0EE /* TrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED463CE2F7BFE189669F8AC6 /* TrainView.swift */; };
 		5786849E7F02388F6CD1A6C4 /* PTCoachUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD50946054A587E5DACCC3D /* PTCoachUITests.swift */; };
 		58EF69E02356CA1614F55AA1 /* YOLOExerciseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */; };
@@ -31,6 +33,7 @@
 		86B412F2690816C7E9AE2BA0 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AA5DAE0157802EB80219F /* CameraManager.swift */; };
 		8C6F6E33FC0837AF565EE609 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD33B48C18A8B4C2625B15BD /* Vision.framework */; };
 		990F88016F1699AD7DF5F82C /* ExerciseSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51757A3217100AEF8491027F /* ExerciseSelectionView.swift */; };
+		9B46C882654DBFBFFB07DC49 /* RepCountingStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBD39D4730FAB81753A5B56 /* RepCountingStateMachine.swift */; };
 		A3932E7B2ADE611D5398C095 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */; };
 		AE75BCB5C689CF946352017B /* CoreMLPoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */; };
 		B12FFDDC434A127B739A9331 /* ProgressViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C05E4D79AB25A3B55279F /* ProgressViewScreen.swift */; };
@@ -40,12 +43,14 @@
 		BECB35975C39D9DA17DE44E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E48870574C5265F661DF365 /* ContentView.swift */; };
 		C1AFD145E4BDCEA6FF0A8257 /* LiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */; };
 		C834082131C075351FAE2822 /* complete_yolo_dataset_robust.json in Resources */ = {isa = PBXBuildFile; fileRef = B570AA9375662830AD249A4C /* complete_yolo_dataset_robust.json */; };
+		CDD93004E833D75741DA4FAD /* FormAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38ED74AD848EE30D67A644E /* FormAnalyzer.swift */; };
 		D4A00F8C0CD65F3D6B64E542 /* AlyssaRep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D1AE284EBAE6D866D2F82469 /* AlyssaRep.m4a */; };
 		D8CE4A6F934F8F4514EBCB52 /* rag_index.json in Resources */ = {isa = PBXBuildFile; fileRef = A8F778264CCEA43E06647405 /* rag_index.json */; };
 		E7E0B0739F2C4B8E50AE1D08 /* SessionStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64229983C84D50CDEC769AD7 /* SessionStatsView.swift */; };
 		F2CFF02BE76A02349674307D /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC17614930896829C0A2026 /* Geometry.swift */; };
 		F68060E3BB5146A9C3A3FD3F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259CA05E2C241BD03C7686C0 /* UIKit.framework */; };
 		F6E1BB728FDDB65061005BB0 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172717007981B1DAFD08F06B /* CoreML.framework */; };
+		FC265A7DF09247F0673D1C86 /* RobustAngleCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7E664D4984E92C2FA8D9A /* RobustAngleCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04115ECA5CA080B3DF64F30C /* ExerciseProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseProcessor.swift; sourceTree = "<group>"; };
 		0E2C6A34D6561BEEB2151C90 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		162A73E0D644926E5C9C73A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		172717007981B1DAFD08F06B /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
@@ -74,14 +80,18 @@
 		5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTrackingView.swift; sourceTree = "<group>"; };
 		51757A3217100AEF8491027F /* ExerciseSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectionView.swift; sourceTree = "<group>"; };
 		64229983C84D50CDEC769AD7 /* SessionStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStatsView.swift; sourceTree = "<group>"; };
+		6CEB316890BD9349D3A4C82B /* YOLOExerciseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseConverter.swift; sourceTree = "<group>"; };
 		75BF4C0FBF9F374275DEB74D /* ExerciseDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDashboardView.swift; sourceTree = "<group>"; };
+		7DBD39D4730FAB81753A5B56 /* RepCountingStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepCountingStateMachine.swift; sourceTree = "<group>"; };
 		85564D982881E866A37A52B0 /* ExerciseSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectorView.swift; sourceTree = "<group>"; };
+		8CF7E664D4984E92C2FA8D9A /* RobustAngleCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobustAngleCalculator.swift; sourceTree = "<group>"; };
 		92069F898AFA0031C8CBBD77 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		953F2ED3371F399E0058E263 /* PoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseProvider.swift; sourceTree = "<group>"; };
 		9B5C05E4D79AB25A3B55279F /* ProgressViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewScreen.swift; sourceTree = "<group>"; };
 		9C8C4C5B4036E51E20A022A5 /* NetworkCameraProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCameraProvider.swift; sourceTree = "<group>"; };
 		9DB3D591C929EEFB7498BC71 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		9F1AA5DAE0157802EB80219F /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		A38ED74AD848EE30D67A644E /* FormAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAnalyzer.swift; sourceTree = "<group>"; };
 		A8B55BFB73BE3DCCDBD2A3FF /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		A8F778264CCEA43E06647405 /* rag_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rag_index.json; sourceTree = "<group>"; };
 		AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMLPoseProvider.swift; sourceTree = "<group>"; };
@@ -168,10 +178,15 @@
 				AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */,
 				F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */,
 				4984849A47375DE6F95D4459 /* ExerciseLibraryManager.swift */,
+				04115ECA5CA080B3DF64F30C /* ExerciseProcessor.swift */,
+				A38ED74AD848EE30D67A644E /* FormAnalyzer.swift */,
 				CCC17614930896829C0A2026 /* Geometry.swift */,
 				26132FBE670BAC5ED2289F68 /* MockPoseProvider.swift */,
 				9C8C4C5B4036E51E20A022A5 /* NetworkCameraProvider.swift */,
 				953F2ED3371F399E0058E263 /* PoseProvider.swift */,
+				7DBD39D4730FAB81753A5B56 /* RepCountingStateMachine.swift */,
+				8CF7E664D4984E92C2FA8D9A /* RobustAngleCalculator.swift */,
+				6CEB316890BD9349D3A4C82B /* YOLOExerciseConverter.swift */,
 				DC16B5C04ACEDE508C1470F7 /* YOLOExerciseManager.swift */,
 				DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */,
 			);
@@ -345,9 +360,11 @@
 				3C9585439865E012E67381F1 /* ExerciseDashboardView.swift in Sources */,
 				B36F618628F0B44631C821E9 /* ExerciseLibrary.swift in Sources */,
 				5E25B544C30EBCBE09961F10 /* ExerciseLibraryManager.swift in Sources */,
+				5306D3103B0011A966FA2514 /* ExerciseProcessor.swift in Sources */,
 				990F88016F1699AD7DF5F82C /* ExerciseSelectionView.swift in Sources */,
 				25D13C62CD4D07390C564F36 /* ExerciseSelectorView.swift in Sources */,
 				0C37B5420586E90E4450C2A5 /* ExerciseTrackingView.swift in Sources */,
+				CDD93004E833D75741DA4FAD /* FormAnalyzer.swift in Sources */,
 				F2CFF02BE76A02349674307D /* Geometry.swift in Sources */,
 				01CDE535B37B0C8AA0C2740C /* LibraryView.swift in Sources */,
 				C1AFD145E4BDCEA6FF0A8257 /* LiveSessionView.swift in Sources */,
@@ -357,8 +374,11 @@
 				21F65FD17F72B360F1423D38 /* PoseOverlayView.swift in Sources */,
 				407B8E8CDC91A4AB12C07853 /* PoseProvider.swift in Sources */,
 				B12FFDDC434A127B739A9331 /* ProgressViewScreen.swift in Sources */,
+				9B46C882654DBFBFFB07DC49 /* RepCountingStateMachine.swift in Sources */,
+				FC265A7DF09247F0673D1C86 /* RobustAngleCalculator.swift in Sources */,
 				E7E0B0739F2C4B8E50AE1D08 /* SessionStatsView.swift in Sources */,
 				53A15820C50D8723E03CC0EE /* TrainView.swift in Sources */,
+				0DC955E0C293026FF04EF8CC /* YOLOExerciseConverter.swift in Sources */,
 				277B96AD7E48EB1AFED75D72 /* YOLOExerciseManager.swift in Sources */,
 				58EF69E02356CA1614F55AA1 /* YOLOExerciseModels.swift in Sources */,
 			);

@@ -14,7 +14,15 @@ struct ExerciseInfo {
 class ExerciseLibrary {
     static let shared = ExerciseLibrary()
     
-    let availableExercises: [ExerciseInfo] = [
+    private(set) var availableExercises: [ExerciseInfo] = []
+    
+    init() {
+        loadDefaultExercises()
+        loadYOLOExercises()
+    }
+    
+    private func loadDefaultExercises() {
+        availableExercises = [
         ExerciseInfo(
             id: "bicep_curl",
             name: "Bicep Curl",
@@ -75,7 +83,32 @@ class ExerciseLibrary {
             extendThreshold: -10.0,
             jointType: "ankle"
         )
-    ]
+        ]
+    }
     
-    private init() {}
+    private func loadYOLOExercises() {
+        guard let url = Bundle.main.url(forResource: "complete_yolo_dataset_robust", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else {
+            print("⚠️ Could not load YOLO dataset from bundle")
+            return
+        }
+        
+        let yoloExercises = YOLOExerciseConverter.loadExercisesFromYOLODataset(jsonData: data)
+        
+        // Add YOLO exercises to available exercises (avoiding duplicates)
+        let existingIds = Set(availableExercises.map { $0.id })
+        let newExercises = yoloExercises.filter { !existingIds.contains($0.id) }
+        
+        availableExercises.append(contentsOf: newExercises)
+        
+        print("✅ Loaded \(yoloExercises.count) exercises from YOLO dataset, \(newExercises.count) new")
+    }
+    
+    func reloadExercises() {
+        availableExercises.removeAll()
+        loadDefaultExercises()
+        loadYOLOExercises()
+    }
 }
+
+private init() {}

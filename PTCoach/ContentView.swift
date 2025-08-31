@@ -100,19 +100,19 @@ struct DashboardPlaceholderView: View {
 struct TrackingPlaceholderView: View {
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var poseProvider = CoreMLPoseProvider()
+    @StateObject private var exerciseProcessor: ExerciseProcessor
     @State private var showingCamera = false
     @State private var cameraPosition: AVCaptureDevice.Position = AVCaptureDevice.Position.front
     @AppStorage("cameraPosition") private var savedCameraPosition = "front"
     @State private var showPermissionAlert = false
     @State private var landmarks: [Landmark] = []
-    @State private var poseQuality: Float = 0.0
-    @State private var frameCount: Int = 0
-    @State private var repCount = 0
-    @State private var leftArmFlexed = false
-    @State private var rightArmFlexed = false
-    @State private var bothArmsExtended = true
     @State private var selectedExercise = ExerciseLibrary.shared.availableExercises[0]
     @State private var showExerciseSelector = false
+    
+    init() {
+        let initialExercise = ExerciseLibrary.shared.availableExercises[0]
+        self._exerciseProcessor = StateObject(wrappedValue: ExerciseProcessor(exercise: initialExercise))
+    }
     
     var body: some View {
         NavigationView {
@@ -179,13 +179,113 @@ struct TrackingPlaceholderView: View {
                                             .foregroundColor(bothArmsFlexed ? .green : .orange)
                                     }
                                 }
-                                .padding()
-                                .background(Color.black.opacity(0.7))
-                                .cornerRadius(12)
+                                
                                 Spacer()
+                                
+                                // Rep counter and state
+                                VStack(spacing: 4) {
+                                    Text("\(exerciseProcessor.processingResults?.repCount ?? 0)")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                    Text("REPS")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.white.opacity(0.8))
+                                    
+                                    if let results = exerciseProcessor.processingResults {
+                                        Text(results.state.uppercased())
+                                            .font(.caption2)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(.white.opacity(0.7))
+                                    }
+                                }
+                            }
+                            
+                            // Form feedback at bottom of HUD
+                            if let results = exerciseProcessor.processingResults,
+                               !results.formFeedback.isEmpty {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    ForEach(results.formFeedback.prefix(2), id: \.self) { feedback in
+                                        Text(feedback)
+                                            .font(.caption)
+                                            .foregroundColor(.yellow)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 2)
+                                            .background(Color.black.opacity(0.5))
+                                            .cornerRadius(4)
+                                    }
+                                }
+                                .padding(.top, 8)
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding()
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.black.opacity(0.7), Color.clear]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        
+                        // Debug HUD overlay
+                        VStack {
+                            Spacer()
+                            HStack {
+                                VStack {
+                                    Circle()
+                                        .fill(cameraManager.isSessionRunning ? Color.green : Color.red)
+                                        .frame(width: 12, height: 12)
+                                    
+                                    Text(cameraManager.isSessionRunning ? "Camera Active" : "Camera Inactive")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                }
+                                
+                                Text("Landmarks: \(landmarks.count)")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                
+                                Text("Quality: \(String(format: "%.1f", poseQuality))")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                
+                                Text("Frames: \(frameCount)")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                
+                                if landmarks.count > 0 {
+                                    let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: landmarks)
+                                    let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: landmarks)
+                                    let repThreshold: CGFloat = 90.0
+                                    let bothArmsFlexed = leftElbowAngle > repThreshold && rightElbowAngle > repThreshold
+                                    let repStatus = bothArmsFlexed ? "BOTH FLEXED" : "PARTIAL/EXTENDED"
+                                    
+                                    Text("Reps: \(repCount)")
+                                        .font(.title)
+                                        .foregroundColor(.cyan)
+                                    
+                                    Text("Left: \(String(format: "%.1f°", leftElbowAngle))")
+                                        .font(.title2)
+                                        .foregroundColor(.yellow)
+                                    
+                                    Text("Right: \(String(format: "%.1f°", rightElbowAngle))")
+                                        .font(.title2)
+                                        .foregroundColor(.yellow)
+                                    
+                                    Text("Status: \(repStatus)")
+                                        .font(.title2)
+                                        .foregroundColor(bothArmsFlexed ? .green : .orange)
+                                }
                             }
                             .padding()
+                            .background(Color.black.opacity(0.7))
+                            .cornerRadius(12)
+                            Spacer()
                         }
+                        .padding()
                     }
                     
                     // Simplified HUD with exercise info and rep count
@@ -318,71 +418,56 @@ struct TrackingPlaceholderView: View {
             .padding()
             .navigationTitle("Track")
             .sheet(isPresented: $showExerciseSelector) {
-                ExerciseSelectionView(selectedExercise: $selectedExercise, repCount: $repCount)
+                ExerciseSelectionView(selectedExercise: $selectedExercise) { newExercise in
+                    selectedExercise = newExercise
+                    exerciseProcessor.reset()
+                    // Note: In a full implementation, we'd create a new processor with the new exercise
+                }
             }
             .onAppear {
                 cameraPosition = savedCameraPosition == "front" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
-                
-                // Connect pose detection to camera frames
+                                // Connect pose detection to camera frames
                 cameraManager.setFrameHandler { pixelBuffer in
                     Task {
                         let detectedLandmarks = await poseProvider.detectPose(pixelBuffer: pixelBuffer)
                         await MainActor.run {
                             self.landmarks = detectedLandmarks
-                            self.frameCount += 1
-                            self.poseQuality = Geometry.poseQuality(landmarks: detectedLandmarks)
                             
-                            // Calculate both elbow angles for bicep curl tracking
-                            let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: detectedLandmarks)
-                            let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: detectedLandmarks)
+                            // Process frame through robust exercise processor
+                            let results = self.exerciseProcessor.processFrame(landmarks: detectedLandmarks)
                             
-                            // Dynamic exercise rep counting based on selected exercise
-                            let exercise = self.selectedExercise
-                            let flexThreshold = exercise.flexThreshold
-                            let extendThreshold = exercise.extendThreshold
-                            
-                            var isFlexed = false
-                            var isExtended = false
-                            
-                            switch exercise.jointType {
-                            case "elbow":
-                                isFlexed = leftElbowAngle > flexThreshold && rightElbowAngle > flexThreshold
-                                isExtended = leftElbowAngle < extendThreshold && rightElbowAngle < extendThreshold
-                            case "shoulder":
-                                let leftShoulderAngle = DynamicAngleEngine.shared.calculateShoulderFlexion(landmarks: detectedLandmarks)
-                                isFlexed = leftShoulderAngle > flexThreshold
-                                isExtended = leftShoulderAngle < extendThreshold
-                            case "knee":
-                                let kneeAngle = DynamicAngleEngine.shared.calculateKneeFlexion(landmarks: detectedLandmarks)
-                                isFlexed = kneeAngle > flexThreshold
-                                isExtended = kneeAngle < extendThreshold
-                            default:
-                                isFlexed = leftElbowAngle > flexThreshold && rightElbowAngle > flexThreshold
-                                isExtended = leftElbowAngle < extendThreshold && rightElbowAngle < extendThreshold
+                            // Handle rep completion
+                            if results.repCompleted {
+                                DynamicAngleEngine.shared.playRepSound()
+                                print("✅ REP COMPLETED! Total: \(results.repCount)")
+                                print("📊 Form Score: \(results.formScore)%")
+                                
+                                // Print feedback if available
+                                if !results.formFeedback.isEmpty {
+                                    print("💡 Form Feedback: \(results.formFeedback.joined(separator: ", "))")
+                                }
                             }
                             
-                            // Simple 3-state rep counting: EXTENDED → FLEXED → EXTENDED = 1 rep
-                            if isExtended && !self.bothArmsExtended {
-                                // Just reached extended position
-                                self.bothArmsExtended = true
-                                if self.leftArmFlexed {
-                                    // Completed a full rep cycle
-                                    self.repCount += 1
-                                    DynamicAngleEngine.shared.playRepSound()
-                                    print("✅ REP COMPLETED! Total: \(self.repCount)")
-                                }
-                                self.leftArmFlexed = false
-                            } else if isFlexed && self.bothArmsExtended {
-                                // Just reached flexed position from extended
-                                self.leftArmFlexed = true
-                                self.bothArmsExtended = false
-                                print("💪 FLEXED POSITION REACHED")
+                            // Handle safety warnings
+                            if !results.safetyWarnings.isEmpty {
+                                print("⚠️ Safety: \(results.safetyWarnings.joined(separator: ", "))")
+                            }
+                            
+                            // Debug output every 30 frames
+                            if results.frame % 30 == 0 {
+                                print("🔄 Frame \(results.frame): State=\(results.state), Angle=\(Int(results.primaryAngle))°, Score=\(Int(results.formScore))%")
                             }
                         }
                     }
                 }
             }
         }
+    }
+    
+    private func formScoreColor(_ score: Float) -> Color {
+        if score >= 80 { return .green }
+        else if score >= 60 { return .orange }
+        else { return .red }
     }
     
     private func startCamera() {

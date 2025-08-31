@@ -2,8 +2,13 @@ import SwiftUI
 
 struct ExerciseSelectionView: View {
     @Binding var selectedExercise: ExerciseInfo
-    @Binding var repCount: Int
-    @Environment(\.dismiss) private var dismiss
+    let onExerciseSelected: ((ExerciseInfo) -> Void)?
+    @Environment(\.presentationMode) var presentationMode
+    
+    init(selectedExercise: Binding<ExerciseInfo>, onExerciseSelected: ((ExerciseInfo) -> Void)? = nil) {
+        self._selectedExercise = selectedExercise
+        self.onExerciseSelected = onExerciseSelected
+    }
     
     var body: some View {
         NavigationView {
@@ -11,8 +16,8 @@ struct ExerciseSelectionView: View {
                 ForEach(ExerciseLibrary.shared.availableExercises, id: \.id) { exercise in
                     Button(action: {
                         selectedExercise = exercise
-                        repCount = 0 // Reset rep count when switching exercises
-                        dismiss()
+                        onExerciseSelected?(exercise)
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
                             VStack(alignment: .leading, spacing: 8) {
