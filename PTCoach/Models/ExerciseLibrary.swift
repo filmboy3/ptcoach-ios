@@ -109,6 +109,6 @@ class ExerciseLibrary {
         loadDefaultExercises()
         loadYOLOExercises()
     }
+    
+    private init() {}
 }
-
-private init() {}
