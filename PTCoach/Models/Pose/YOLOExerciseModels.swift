@@ -266,8 +266,8 @@ struct RepThresholds {
 
 // MARK: - Form Analysis Models
 
-/// Real-time form analysis engine
-class FormAnalyzer: ObservableObject {
+/// Real-time form analysis engine (legacy - replaced by FormAnalyzer.swift)
+class LegacyFormAnalyzer: ObservableObject {
     @Published var currentFormScore: Double = 0.0
     @Published var jointAnalysis: [String: JointAnalysis] = [:]
     @Published var formFeedback: [FormFeedback] = []

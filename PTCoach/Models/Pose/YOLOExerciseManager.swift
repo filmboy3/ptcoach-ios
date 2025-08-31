@@ -13,7 +13,7 @@ class YOLOExerciseManager: ObservableObject {
     @Published var error: YOLOError?
     
     private let repDetector = RepDetector(keypointsToTrack: [])
-    private let formAnalyzer = FormAnalyzer()
+    private let formAnalyzer = LegacyFormAnalyzer()
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -140,7 +140,7 @@ class YOLOExerciseManager: ObservableObject {
             session.recordRep()
         }
         
-        // Analyze form
+        // Analyze form (using legacy analyzer for now)
         let formResult = formAnalyzer.analyzeForm(keypoints: keypoints, targetPhase: currentPhase)
         session.updateFormScore(formResult.overallScore)
         
