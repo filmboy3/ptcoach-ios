@@ -115,7 +115,7 @@ struct TrackingPlaceholderView: View {
                     // Live Camera Preview with Pose Overlay
                     ZStack {
                         // Camera preview - fullscreen
-                        CameraPreviewView(cameraManager: cameraManager, cameraPosition: cameraPosition)
+                        CameraPreviewView(session: cameraManager.session)
                             .ignoresSafeArea()
                         
                         // Pose keypoints overlay - fullscreen

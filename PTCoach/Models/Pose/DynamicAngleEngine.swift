@@ -244,7 +244,7 @@ class DynamicAngleEngine: ObservableObject {
         return Geometry.kneeFlexionAngle(hip: leftHip, knee: leftKnee, ankle: leftAnkle) ?? 0
     }
     
-    private func calculateElbowAngle(landmarks: [Landmark]) -> CGFloat {
+    func calculateElbowAngle(landmarks: [Landmark]) -> CGFloat {
         guard let leftShoulder = landmarks.first(where: { $0.jointType?.name == "left_shoulder" }),
               let leftElbow = landmarks.first(where: { $0.jointType?.name == "left_elbow" }),
               let leftWrist = landmarks.first(where: { $0.jointType?.name == "left_wrist" }),
