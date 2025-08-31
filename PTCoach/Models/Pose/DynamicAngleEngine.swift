@@ -255,6 +255,35 @@ class DynamicAngleEngine: ObservableObject {
         return Geometry.angle(leftShoulder.cgPoint, leftElbow.cgPoint, leftWrist.cgPoint)
     }
     
+    func calculateRightElbowAngle(landmarks: [Landmark]) -> CGFloat {
+        guard let rightShoulder = landmarks.first(where: { $0.jointType?.name == "right_shoulder" }),
+              let rightElbow = landmarks.first(where: { $0.jointType?.name == "right_elbow" }),
+              let rightWrist = landmarks.first(where: { $0.jointType?.name == "right_wrist" }),
+              rightShoulder.confidence > 0.5, rightElbow.confidence > 0.5, rightWrist.confidence > 0.5 else {
+            return 0
+        }
+        
+        return Geometry.angle(rightShoulder.cgPoint, rightElbow.cgPoint, rightWrist.cgPoint)
+    }
+    
+    func playRepSound() {
+        // Play AlyssaRep.m4a sound
+        guard let soundURL = Bundle.main.url(forResource: "AlyssaRep", withExtension: "m4a") else {
+            print("❌ Could not find AlyssaRep.m4a file")
+            return
+        }
+        
+        var soundID: SystemSoundID = 0
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &soundID)
+        AudioServicesPlaySystemSound(soundID)
+        
+        // Add haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
+        print("🔊 Rep completed! Playing sound and haptic feedback")
+    }
+    
     func calculateShoulderFlexion(landmarks: [Landmark]) -> CGFloat {
         guard let leftShoulder = landmarks.first(where: { $0.jointType?.name == "left_shoulder" }),
               let leftElbow = landmarks.first(where: { $0.jointType?.name == "left_elbow" }),

@@ -107,6 +107,10 @@ struct TrackingPlaceholderView: View {
     @State private var landmarks: [Landmark] = []
     @State private var poseQuality: Float = 0.0
     @State private var frameCount: Int = 0
+    @State private var repCount: Int = 0
+    @State private var leftArmFlexed: Bool = false
+    @State private var rightArmFlexed: Bool = false
+    @State private var bothArmsExtended: Bool = true
     
     var body: some View {
         NavigationView {
@@ -150,18 +154,27 @@ struct TrackingPlaceholderView: View {
                                         .foregroundColor(.white)
                                     
                                     if landmarks.count > 0 {
-                                        let elbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: landmarks)
+                                        let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: landmarks)
+                                        let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: landmarks)
                                         let repThreshold: CGFloat = 90.0
-                                        let isFlexed = elbowAngle > repThreshold
-                                        let repStatus = isFlexed ? "FLEXED" : "EXTENDED"
+                                        let bothArmsFlexed = leftElbowAngle > repThreshold && rightElbowAngle > repThreshold
+                                        let repStatus = bothArmsFlexed ? "BOTH FLEXED" : "PARTIAL/EXTENDED"
                                         
-                                        Text("Elbow: \(String(format: "%.1f°", elbowAngle))")
+                                        Text("Reps: \(repCount)")
+                                            .font(.title)
+                                            .foregroundColor(.cyan)
+                                        
+                                        Text("Left: \(String(format: "%.1f°", leftElbowAngle))")
+                                            .font(.title2)
+                                            .foregroundColor(.yellow)
+                                        
+                                        Text("Right: \(String(format: "%.1f°", rightElbowAngle))")
                                             .font(.title2)
                                             .foregroundColor(.yellow)
                                         
                                         Text("Status: \(repStatus)")
                                             .font(.title2)
-                                            .foregroundColor(isFlexed ? .green : .orange)
+                                            .foregroundColor(bothArmsFlexed ? .green : .orange)
                                     }
                                 }
                                 .padding()
@@ -262,17 +275,38 @@ struct TrackingPlaceholderView: View {
                             self.frameCount += 1
                             self.poseQuality = Geometry.poseQuality(landmarks: detectedLandmarks)
                             
-                            // Calculate elbow angle for bicep curl tracking
-                            let elbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: detectedLandmarks)
+                            // Calculate both elbow angles for bicep curl tracking
+                            let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: detectedLandmarks)
+                            let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: detectedLandmarks)
                             
-                            // Simple rep detection for bicep curls
+                            // Rep detection for both arms bicep curls
                             let repThreshold: CGFloat = 90.0 // degrees
-                            let isFlexed = elbowAngle > repThreshold
+                            let leftIsFlexed = leftElbowAngle > repThreshold
+                            let rightIsFlexed = rightElbowAngle > repThreshold
+                            let bothArmsFlexed = leftIsFlexed && rightIsFlexed
+                            let bothArmsExtendedNow = leftElbowAngle < 45.0 && rightElbowAngle < 45.0
+                            
+                            // Rep counting state machine
+                            if bothArmsFlexed && !self.leftArmFlexed && !self.rightArmFlexed {
+                                // Both arms just flexed from extended position
+                                self.leftArmFlexed = true
+                                self.rightArmFlexed = true
+                                self.bothArmsExtended = false
+                            } else if bothArmsExtendedNow && (self.leftArmFlexed || self.rightArmFlexed) {
+                                // Both arms returned to extended position after being flexed - complete rep
+                                self.repCount += 1
+                                self.leftArmFlexed = false
+                                self.rightArmFlexed = false
+                                self.bothArmsExtended = true
+                                
+                                // Play sound and haptic feedback
+                                DynamicAngleEngine.shared.playRepSound()
+                            }
                             
                             // Debug logging with bicep curl info
                             let visibleCount = detectedLandmarks.filter { $0.isVisible }.count
-                            let repStatus = isFlexed ? "FLEXED" : "EXTENDED"
-                            print("🔍 BICEP CURL - Frame: \(self.frameCount), Landmarks: \(visibleCount)/\(detectedLandmarks.count), Quality: \(String(format: "%.1f", self.poseQuality)), Elbow: \(String(format: "%.1f°", elbowAngle)), Status: \(repStatus))")
+                            let repStatus = bothArmsFlexed ? "BOTH FLEXED" : bothArmsExtendedNow ? "BOTH EXTENDED" : "PARTIAL"
+                            print("🔍 BICEP CURL - Frame: \(self.frameCount), Reps: \(self.repCount), Left: \(String(format: "%.1f°", leftElbowAngle)), Right: \(String(format: "%.1f°", rightElbowAngle)), Status: \(repStatus))")
                         }
                     }
                 }
