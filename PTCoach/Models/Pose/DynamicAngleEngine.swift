@@ -416,7 +416,7 @@ class DynamicAngleEngine: ObservableObject {
         // Use dynamic thresholds based on exercise
         let (enterThreshold, exitThreshold) = getDynamicThresholds(for: exercise)
         
-        let wasInFlexion = inFlexion
+        _ = inFlexion
         
         // Enter flexion
         if !inFlexion && angle < enterThreshold {
@@ -615,7 +615,7 @@ class DynamicAngleEngine: ObservableObject {
                 repCount: repCount,
                 formScore: formScore
             ) { [weak self] feedback in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     self?.feedbackMessage = feedback
                 }
             }
@@ -693,7 +693,7 @@ class LLMCoachInterface {
         
         var feedback = "Keep going!"
         
-        if let exercise = exercise {
+        if exercise != nil {
             if !errors.isEmpty {
                 feedback = errors.first?.feedback ?? "Check your form"
             } else if formScore > 80 {

@@ -52,7 +52,8 @@ class ExerciseLibraryManager: ObservableObject {
         do {
             let apiExercises = try await apiClient.fetchAllExercises()
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 // Merge with existing exercises, avoiding duplicates
                 let existingIds = Set(self.exercises.map { $0.id })
                 let newExercises = apiExercises.filter { !existingIds.contains($0.id) }
@@ -65,8 +66,8 @@ class ExerciseLibraryManager: ObservableObject {
             }
         } catch {
             print("❌ Error fetching exercises from API: \(error)")
-            DispatchQueue.main.async {
-                self.isLoading = false
+            DispatchQueue.main.async { [weak self] in
+                self?.isLoading = false
             }
         }
     }

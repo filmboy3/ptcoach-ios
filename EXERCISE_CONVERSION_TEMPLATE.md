@@ -9,7 +9,12 @@ This document provides the exact format and methodology for converting exercises
 - ✅ **Bicep Curl** - Uses elbow angle calculation with both arms
 - ✅ **Shoulder Flexion** - Uses shoulder angle calculation
 
-### Broken Exercises (Need Fixing)
+### Fixed Issues (Previously Broken)
+- ✅ **Swift Compiler Warnings** - Fixed unused variables and @Sendable capture issues
+- ✅ **Interface Orientations** - Added support for all orientations in project.yml
+- ✅ **Xcode Project** - Regenerated with xcodegen to include all fixes
+
+### Still Broken Exercises (Need Fixing)
 - ❌ **Knee Flexion** - Missing proper knee angle calculation
 - ❌ **Ankle Flexion** - No ankle joint tracking implemented
 - ❌ **Neck Flexion** - No neck joint tracking implemented

@@ -375,7 +375,7 @@ class FormAnalyzer: ObservableObject {
         
         let minTarget = target[0]
         let maxTarget = target[1]
-        let midTarget = (minTarget + maxTarget) / 2
+        _ = (minTarget + maxTarget) / 2
         
         if current < minTarget {
             return "Increase \(joint.replacingOccurrences(of: "_", with: " ")) angle"

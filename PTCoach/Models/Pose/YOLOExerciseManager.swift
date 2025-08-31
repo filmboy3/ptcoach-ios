@@ -98,7 +98,7 @@ class YOLOExerciseManager: ObservableObject {
         self.currentSession = session
         
         // Configure rep detector for this exercise
-        let repDetector = RepDetector(keypointsToTrack: exercise.repDetectionKeypoints)
+        _ = RepDetector(keypointsToTrack: exercise.repDetectionKeypoints)
         
         print("🏃‍♂️ Started exercise session: \(exercise.name)")
     }

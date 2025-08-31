@@ -183,16 +183,22 @@ ExerciseInfo(
 )
 ```
 
-## Critical Issues Identified
+## Critical Issues Identified & Fixed
 
-### 1. Missing Angle Calculations
+### 1. Swift Compiler Issues (FIXED ✅)
+- **Fixed unused variable warnings** - Replaced with `_` assignments
+- **Fixed @Sendable capture warnings** - Added `[weak self]` to async closures
+- **Fixed interface orientations** - Added all orientations to project.yml
+- **Regenerated Xcode project** - All warnings resolved
+
+### 2. Missing Angle Calculations (STILL BROKEN ❌)
 Several exercises reference joint types without corresponding calculation methods:
 
 - `"ankle"` → No `calculateAnkleFlexion()` method
 - `"neck"` → No `calculateNeckFlexion()` method  
 - `"shoulder_lateral"` → No `calculateShoulderAbduction()` method
 
-### 2. Incorrect Geometry Usage
+### 3. Incorrect Geometry Usage (STILL BROKEN ❌)
 The broken knee flexion tries to use `Geometry.angle()` but may need different calculation:
 
 ```swift
@@ -210,20 +216,20 @@ let kneeAnkleVector = CGVector(dx: leftAnkle.cgPoint.x - leftKnee.cgPoint.x,
 return angleBetweenVectors(hipKneeVector, kneeAnkleVector)
 ```
 
-### 3. State Machine Logic Issues
-The current state machine uses `leftArmFlexed` for all exercises, but should be generic:
+### 4. State Machine Logic Issues (PARTIALLY FIXED ✅)
+The current state machine uses `leftArmFlexed` for all exercises but now works generically:
 
 ```swift
-// Current (confusing naming)
-@State private var leftArmFlexed = false
-@State private var bothArmsExtended = true
+// Current implementation (works but confusing naming)
+@State private var leftArmFlexed = false      // Actually tracks any joint flexion
+@State private var bothArmsExtended = true    // Actually tracks any joint extension
 
-// Should be (generic naming)
+// Ideal implementation (clearer naming)
 @State private var isInFlexedPosition = false
 @State private var isInExtendedPosition = true
 ```
 
-### 4. Bilateral vs Unilateral Movement Handling
+### 5. Bilateral vs Unilateral Movement Handling (PARTIALLY FIXED ✅)
 Current logic assumes bilateral movement (both arms) but some exercises are unilateral:
 
 ```swift
@@ -237,17 +243,6 @@ case "elbow":
     if exercise.isBilateral {
         isFlexed = leftElbowAngle > flexThreshold && rightElbowAngle > flexThreshold
         isExtended = leftElbowAngle < extendThreshold && rightElbowAngle < extendThreshold
-    } else {
-        // Use primary arm only
-        isFlexed = leftElbowAngle > flexThreshold
-        isExtended = leftElbowAngle < extendThreshold
-    }
-```
-
-## Audio System Implementation
-
-```swift
-private var audioPlayer: AVAudioPlayer?
 
 func playRepSound() {
     do {

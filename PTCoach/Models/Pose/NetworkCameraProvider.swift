@@ -55,7 +55,7 @@ class NetworkCameraProvider: PoseProvider {
     
     private func processImageData(_ data: Data) {
         // Convert received image data to CVPixelBuffer for pose detection
-        guard let image = UIImage(data: data) else { return }
+        guard UIImage(data: data) != nil else { return }
         
         // Here you would convert UIImage to CVPixelBuffer and run pose detection
         print("📸 Received image frame: \(data.count) bytes")
