@@ -5,7 +5,7 @@ import simd
 /// Robust angle calculation with noise filtering and validation
 class RobustAngleCalculator {
     private var angleHistory: [String: [CGFloat]] = [:]
-    private let historySize: Int = 5
+    private let historySize: Int
     private let confidenceThreshold: Float = 0.5
     
     init(historySize: Int = 5) {
