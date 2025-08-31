@@ -121,6 +121,8 @@ struct Progressions: Codable {
 // MARK: - Enhanced Angle Engine for Dynamic Exercises
 
 class DynamicAngleEngine: ObservableObject {
+    static let shared = DynamicAngleEngine()
+    
     @Published var currentExercise: DynamicExercise?
     @Published var currentPhase: MovementPhase?
     @Published var phaseProgress: Float = 0
@@ -253,7 +255,7 @@ class DynamicAngleEngine: ObservableObject {
         return Geometry.angle(leftShoulder.cgPoint, leftElbow.cgPoint, leftWrist.cgPoint)
     }
     
-    private func calculateShoulderFlexion(landmarks: [Landmark]) -> CGFloat {
+    func calculateShoulderFlexion(landmarks: [Landmark]) -> CGFloat {
         guard let leftShoulder = landmarks.first(where: { $0.jointType?.name == "left_shoulder" }),
               let leftElbow = landmarks.first(where: { $0.jointType?.name == "left_elbow" }),
               let leftHip = landmarks.first(where: { $0.jointType?.name == "left_hip" }),

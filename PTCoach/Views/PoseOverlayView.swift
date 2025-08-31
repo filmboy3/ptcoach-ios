@@ -12,18 +12,20 @@ struct PoseOverlayView: View {
                     if landmark.isVisible {
                         Circle()
                             .fill(colorForJoint(landmark.jointType))
-                            .frame(width: dotSize, height: dotSize)
+                            .frame(width: 8, height: 8)
                             .position(
-                                x: CGFloat(landmark.x) * geometry.size.width,
-                                y: CGFloat(landmark.y) * geometry.size.height
+                                CGPoint(
+                                    x: CGFloat(landmark.y) * geometry.size.width,
+                                    y: CGFloat(landmark.x) * geometry.size.height
+                                )
                             )
                             .overlay(
                                 Text("\(index)")
                                     .font(.system(size: 6))
                                     .foregroundColor(.white)
                                     .position(
-                                        x: CGFloat(landmark.x) * geometry.size.width,
-                                        y: CGFloat(landmark.y) * geometry.size.height
+                                        x: CGFloat(landmark.y) * geometry.size.width,
+                                        y: CGFloat(landmark.x) * geometry.size.height
                                     )
                             )
                     }
@@ -32,8 +34,8 @@ struct PoseOverlayView: View {
                 // Draw skeleton connections for better visualization
                 drawSkeleton(in: geometry.size)
             }
-            // Mirror horizontally for front camera
-            .scaleEffect(x: -1, y: 1, anchor: .center)
+            // No mirroring - keep natural orientation
+            .scaleEffect(x: 1, y: 1, anchor: .center)
         }
         .allowsHitTesting(false)
     }
@@ -97,12 +99,12 @@ struct PoseOverlayView: View {
         guard fromLandmark.isVisible && toLandmark.isVisible else { return }
         
         let fromPoint = CGPoint(
-            x: CGFloat(fromLandmark.x) * size.width,
-            y: CGFloat(fromLandmark.y) * size.height
+            x: CGFloat(fromLandmark.y) * size.width,
+            y: CGFloat(fromLandmark.x) * size.height
         )
         let toPoint = CGPoint(
-            x: CGFloat(toLandmark.x) * size.width,
-            y: CGFloat(toLandmark.y) * size.height
+            x: CGFloat(toLandmark.y) * size.width,
+            y: CGFloat(toLandmark.x) * size.height
         )
         
         path.move(to: fromPoint)

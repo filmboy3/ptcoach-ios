@@ -114,21 +114,64 @@ struct TrackingPlaceholderView: View {
                 if showingCamera {
                     // Live Camera Preview with Pose Overlay
                     ZStack {
-                        CameraPreviewView(session: cameraManager.session)
-                            .frame(height: 400)
-                            .cornerRadius(12)
-                            .clipped()
+                        // Camera preview - fullscreen
+                        CameraPreviewView(cameraManager: cameraManager, cameraPosition: cameraPosition)
+                            .ignoresSafeArea()
                         
-                        // Pose keypoints overlay
+                        // Pose keypoints overlay - fullscreen
                         PoseOverlayView(landmarks: landmarks)
-                            .frame(height: 400)
-                            .cornerRadius(12)
-                            .clipped()
+                            .ignoresSafeArea()
+                        
+                        // Debug HUD overlay
+                        VStack {
+                            Spacer()
+                            HStack {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                        Circle()
+                                            .fill(cameraManager.isSessionRunning ? Color.green : Color.red)
+                                            .frame(width: 12, height: 12)
+                                        
+                                        Text(cameraManager.isSessionRunning ? "Camera Active" : "Camera Inactive")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }
+                                    
+                                    Text("Landmarks: \(landmarks.count)")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("Quality: \(String(format: "%.1f", poseQuality))")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("Frames: \(frameCount)")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                    
+                                    if landmarks.count > 0 {
+                                        let elbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: landmarks)
+                                        let repThreshold: CGFloat = 90.0
+                                        let isFlexed = elbowAngle > repThreshold
+                                        let repStatus = isFlexed ? "FLEXED" : "EXTENDED"
+                                        
+                                        Text("Elbow: \(String(format: "%.1f°", elbowAngle))")
+                                            .font(.title2)
+                                            .foregroundColor(.yellow)
+                                        
+                                        Text("Status: \(repStatus)")
+                                            .font(.title2)
+                                            .foregroundColor(isFlexed ? .green : .orange)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.black.opacity(0.7))
+                                .cornerRadius(12)
+                                Spacer()
+                            }
+                            .padding()
+                        }
                     }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(landmarks.isEmpty ? Color.red : Color.green, lineWidth: 2)
-                    )
                     
                     // Camera Controls
                     HStack(spacing: 20) {
@@ -196,6 +239,20 @@ struct TrackingPlaceholderView: View {
             .onAppear {
                 cameraPosition = savedCameraPosition == "front" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
                 
+                // Initialize bicep curl exercise tracking
+                let bicepCurlExercise = YOLOExerciseReference(
+                    exerciseId: "bicep_curl",
+                    name: "Bicep Curl",
+                    category: ["strength"],
+                    difficulty: "beginner",
+                    bodyOrientation: "standing",
+                    cameraAngle: "side_view",
+                    phases: [],
+                    repDetectionKeypoints: ["left_shoulder", "left_elbow", "left_wrist"],
+                    safetyConstraints: ["Keep elbow stationary", "Control the movement"],
+                    formCheckpoints: ["Start with arm extended", "Curl to 90+ degrees", "Return to start position"]
+                )
+                
                 // Connect pose detection to camera frames
                 cameraManager.setFrameHandler { pixelBuffer in
                     Task {
@@ -205,9 +262,17 @@ struct TrackingPlaceholderView: View {
                             self.frameCount += 1
                             self.poseQuality = Geometry.poseQuality(landmarks: detectedLandmarks)
                             
-                            // Debug logging
+                            // Calculate elbow angle for bicep curl tracking
+                            let elbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: detectedLandmarks)
+                            
+                            // Simple rep detection for bicep curls
+                            let repThreshold: CGFloat = 90.0 // degrees
+                            let isFlexed = elbowAngle > repThreshold
+                            
+                            // Debug logging with bicep curl info
                             let visibleCount = detectedLandmarks.filter { $0.isVisible }.count
-                            print("🔍 POSE DETECTION - Frame: \(self.frameCount), Visible landmarks: \(visibleCount)/\(detectedLandmarks.count), Quality: \(String(format: "%.1f", self.poseQuality))")
+                            let repStatus = isFlexed ? "FLEXED" : "EXTENDED"
+                            print("🔍 BICEP CURL - Frame: \(self.frameCount), Landmarks: \(visibleCount)/\(detectedLandmarks.count), Quality: \(String(format: "%.1f", self.poseQuality)), Elbow: \(String(format: "%.1f°", elbowAngle)), Status: \(repStatus))")
                         }
                     }
                 }
@@ -346,9 +411,8 @@ struct SettingsView: View {
                         Text("616 exercises")
                             .foregroundColor(.secondary)
                     }
-                }
-                
-                Section("Support") {
+                    
+                    
                     Button("Contact Support") {
                         // Handle support contact
                     }
