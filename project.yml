@@ -29,6 +29,20 @@ targets:
       - sdk: AudioToolbox.framework
       - sdk: CoreVideo.framework
       - sdk: CoreMedia.framework
+  
+  PTCoachUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - PTCoachUITests
+    dependencies:
+      - target: PTCoach
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.ptcoach.PTCoachUITests
+      DEVELOPMENT_TEAM: ""
+      CODE_SIGN_STYLE: Automatic
+      INFOPLIST_FILE: PTCoachUITests/Info.plist
+      SWIFT_VERSION: "5.0"
     info:
       path: PTCoach/Info.plist
       properties:
