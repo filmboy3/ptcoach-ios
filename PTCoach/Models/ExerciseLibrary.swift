@@ -16,11 +16,6 @@ class ExerciseLibrary {
     
     private(set) var availableExercises: [ExerciseInfo] = []
     
-    init() {
-        loadDefaultExercises()
-        loadYOLOExercises()
-    }
-    
     private func loadDefaultExercises() {
         availableExercises = [
         ExerciseInfo(
@@ -110,5 +105,8 @@ class ExerciseLibrary {
         loadYOLOExercises()
     }
     
-    private init() {}
+    private init() {
+        loadDefaultExercises()
+        loadYOLOExercises()
+    }
 }
