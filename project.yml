@@ -5,6 +5,7 @@ options:
     iOS: "15.0"
   developmentLanguage: en
   xcodeVersion: "15.0"
+  minimumXcodeGenVersion: "2.25.0"
 
 targets:
   PTCoach:
@@ -18,6 +19,11 @@ targets:
       CODE_SIGN_STYLE: Automatic
       INFOPLIST_FILE: PTCoach/Info.plist
       SWIFT_VERSION: "5.0"
+      IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+      MARKETING_VERSION: "1.0"
+      CURRENT_PROJECT_VERSION: "1"
+      ENABLE_BITCODE: NO
+      SWIFT_STRICT_CONCURRENCY: complete
     dependencies:
       - sdk: AVFoundation.framework
       - sdk: Vision.framework

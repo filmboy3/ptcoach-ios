@@ -3,7 +3,7 @@ import SwiftUI
 struct ExerciseSelectionView: View {
     @Binding var selectedExercise: ExerciseInfo
     let onExerciseSelected: ((ExerciseInfo) -> Void)?
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     
     init(selectedExercise: Binding<ExerciseInfo>, onExerciseSelected: ((ExerciseInfo) -> Void)? = nil) {
         self._selectedExercise = selectedExercise
@@ -17,7 +17,7 @@ struct ExerciseSelectionView: View {
                     Button(action: {
                         selectedExercise = exercise
                         onExerciseSelected?(exercise)
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }) {
                         HStack {
                             VStack(alignment: .leading, spacing: 8) {

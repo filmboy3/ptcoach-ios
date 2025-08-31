@@ -3,6 +3,7 @@ import Combine
 
 // MARK: - Exercise Library Manager
 
+@MainActor
 class ExerciseLibraryManager: ObservableObject {
     @Published var exercises: [DynamicExercise] = []
     @Published var isLoading = false
