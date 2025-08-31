@@ -14,7 +14,7 @@ targets:
       - PTCoach
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.ptcoach.PTCoach
-      DEVELOPMENT_TEAM: ""
+      DEVELOPMENT_TEAM: "AUTOMATIC"
       CODE_SIGN_STYLE: Automatic
       INFOPLIST_FILE: PTCoach/Info.plist
       SWIFT_VERSION: "5.0"
@@ -55,7 +55,7 @@ targets:
       - target: PTCoach
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.ptcoach.PTCoachUITests
-      DEVELOPMENT_TEAM: ""
+      DEVELOPMENT_TEAM: "AUTOMATIC"
       CODE_SIGN_STYLE: Automatic
       INFOPLIST_FILE: PTCoachUITests/Info.plist
       SWIFT_VERSION: "5.0"

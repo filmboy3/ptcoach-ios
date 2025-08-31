@@ -108,6 +108,9 @@ struct TrackingPlaceholderView: View {
     @State private var landmarks: [Landmark] = []
     @State private var selectedExercise = ExerciseLibrary.shared.availableExercises[0]
     @State private var showExerciseSelector = false
+    @State private var poseQuality: Float = 0.0
+    @State private var frameCount: Int = 0
+    @State private var repCount: Int = 0
     
     init() {
         let initialExercise = ExerciseLibrary.shared.availableExercises[0]
@@ -432,9 +435,14 @@ struct TrackingPlaceholderView: View {
                         let detectedLandmarks = await poseProvider.detectPose(pixelBuffer: pixelBuffer)
                         await MainActor.run {
                             self.landmarks = detectedLandmarks
+                            self.frameCount += 1
+                            self.poseQuality = Geometry.poseQuality(landmarks: detectedLandmarks)
                             
                             // Process frame through robust exercise processor
                             let results = self.exerciseProcessor.processFrame(landmarks: detectedLandmarks)
+                            
+                            // Update rep count from processor
+                            self.repCount = results.repCount
                             
                             // Handle rep completion
                             if results.repCompleted {
