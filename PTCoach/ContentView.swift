@@ -122,173 +122,97 @@ struct TrackingPlaceholderView: View {
             VStack(spacing: 20) {
                 if showingCamera {
                     // Live Camera Preview with Pose Overlay
-                    ZStack {
-                        // Camera preview - fullscreen
-                        CameraPreviewView(session: cameraManager.session)
-                            .ignoresSafeArea()
-                        
-                        // Pose keypoints overlay - fullscreen
-                        PoseOverlayView(landmarks: landmarks)
-                            .ignoresSafeArea()
-                        
-                        // Debug HUD overlay
-                        VStack {
-                            Spacer()
-                            HStack {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack {
+                    GeometryReader { geometry in
+                        ZStack {
+                            // Camera preview - properly sized
+                            CameraPreviewView(session: cameraManager.session)
+                                .frame(width: geometry.size.width, height: geometry.size.height * 0.75)
+                                .clipped()
+                            
+                            // Pose keypoints overlay
+                            PoseOverlayView(landmarks: landmarks)
+                                .frame(width: geometry.size.width, height: geometry.size.height * 0.75)
+                                .clipped()
+                            
+                            // Clean HUD overlay
+                            VStack {
+                                // Top status bar
+                                HStack {
+                                    HStack(spacing: 8) {
                                         Circle()
                                             .fill(cameraManager.isSessionRunning ? Color.green : Color.red)
-                                            .frame(width: 12, height: 12)
+                                            .frame(width: 8, height: 8)
                                         
-                                        Text(cameraManager.isSessionRunning ? "Camera Active" : "Camera Inactive")
-                                            .font(.headline)
-                                            .foregroundColor(.white)
+                                        Text(cameraManager.isSessionRunning ? "Active" : "Inactive")
+                                            .font(.caption)
+                                            .fontWeight(.medium)
                                     }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(Color.black.opacity(0.8))
+                                    .cornerRadius(20)
                                     
-                                    Text("Landmarks: \(landmarks.count)")
-                                        .font(.title2)
-                                        .foregroundColor(.white)
+                                    Spacer()
                                     
-                                    Text("Quality: \(String(format: "%.1f", poseQuality))")
-                                        .font(.title2)
-                                        .foregroundColor(.white)
-                                    
-                                    Text("Frames: \(frameCount)")
-                                        .font(.title2)
-                                        .foregroundColor(.white)
-                                    
-                                    if landmarks.count > 0 {
-                                        let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: landmarks)
-                                        let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: landmarks)
-                                        let repThreshold: CGFloat = 90.0
-                                        let bothArmsFlexed = leftElbowAngle > repThreshold && rightElbowAngle > repThreshold
-                                        let repStatus = bothArmsFlexed ? "BOTH FLEXED" : "PARTIAL/EXTENDED"
-                                        
-                                        Text("Reps: \(repCount)")
-                                            .font(.title)
-                                            .foregroundColor(.cyan)
-                                        
-                                        Text("Left: \(String(format: "%.1f°", leftElbowAngle))")
-                                            .font(.title2)
-                                            .foregroundColor(.yellow)
-                                        
-                                        Text("Right: \(String(format: "%.1f°", rightElbowAngle))")
-                                            .font(.title2)
-                                            .foregroundColor(.yellow)
-                                        
-                                        Text("Status: \(repStatus)")
-                                            .font(.title2)
-                                            .foregroundColor(bothArmsFlexed ? .green : .orange)
+                                    // Form score
+                                    if let results = exerciseProcessor.processingResults {
+                                        HStack(spacing: 4) {
+                                            Text("\(Int(results.formScore))%")
+                                                .font(.caption)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(formScoreColor(results.formScore))
+                                            Text("Form")
+                                                .font(.caption2)
+                                                .foregroundColor(.white.opacity(0.8))
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .background(Color.black.opacity(0.8))
+                                        .cornerRadius(20)
                                     }
                                 }
+                                .padding(.horizontal)
+                                .padding(.top, 8)
                                 
                                 Spacer()
                                 
-                                // Rep counter and state
-                                VStack(spacing: 4) {
-                                    Text("\(exerciseProcessor.processingResults?.repCount ?? 0)")
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                    Text("REPS")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.white.opacity(0.8))
-                                    
-                                    if let results = exerciseProcessor.processingResults {
-                                        Text(results.state.uppercased())
+                                // Bottom HUD
+                                HStack {
+                                    // Rep counter
+                                    VStack(spacing: 2) {
+                                        Text("\(exerciseProcessor.processingResults?.repCount ?? 0)")
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                        Text("REPS")
                                             .font(.caption2)
                                             .fontWeight(.medium)
                                             .foregroundColor(.white.opacity(0.7))
                                     }
-                                }
-                            }
-                            
-                            // Form feedback at bottom of HUD
-                            if let results = exerciseProcessor.processingResults,
-                               !results.formFeedback.isEmpty {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    ForEach(results.formFeedback.prefix(2), id: \.self) { feedback in
-                                        Text(feedback)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(Color.black.opacity(0.8))
+                                    .cornerRadius(12)
+                                    
+                                    Spacer()
+                                    
+                                    // Exercise state
+                                    if let results = exerciseProcessor.processingResults {
+                                        Text(results.state.uppercased())
                                             .font(.caption)
-                                            .foregroundColor(.yellow)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 2)
-                                            .background(Color.black.opacity(0.5))
-                                            .cornerRadius(4)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .background(Color.blue.opacity(0.8))
+                                            .cornerRadius(20)
                                     }
                                 }
-                                .padding(.top, 8)
+                                .padding(.horizontal)
+                                .padding(.bottom, 8)
                             }
-                            
-                            Spacer()
                         }
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.black.opacity(0.7), Color.clear]),
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                        
-                        // Debug HUD overlay
-                        VStack {
-                            Spacer()
-                            HStack {
-                                VStack {
-                                    Circle()
-                                        .fill(cameraManager.isSessionRunning ? Color.green : Color.red)
-                                        .frame(width: 12, height: 12)
-                                    
-                                    Text(cameraManager.isSessionRunning ? "Camera Active" : "Camera Inactive")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                }
-                                
-                                Text("Landmarks: \(landmarks.count)")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                
-                                Text("Quality: \(String(format: "%.1f", poseQuality))")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                
-                                Text("Frames: \(frameCount)")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                
-                                if landmarks.count > 0 {
-                                    let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: landmarks)
-                                    let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: landmarks)
-                                    let repThreshold: CGFloat = 90.0
-                                    let bothArmsFlexed = leftElbowAngle > repThreshold && rightElbowAngle > repThreshold
-                                    let repStatus = bothArmsFlexed ? "BOTH FLEXED" : "PARTIAL/EXTENDED"
-                                    
-                                    Text("Reps: \(repCount)")
-                                        .font(.title)
-                                        .foregroundColor(.cyan)
-                                    
-                                    Text("Left: \(String(format: "%.1f°", leftElbowAngle))")
-                                        .font(.title2)
-                                        .foregroundColor(.yellow)
-                                    
-                                    Text("Right: \(String(format: "%.1f°", rightElbowAngle))")
-                                        .font(.title2)
-                                        .foregroundColor(.yellow)
-                                    
-                                    Text("Status: \(repStatus)")
-                                        .font(.title2)
-                                        .foregroundColor(bothArmsFlexed ? .green : .orange)
-                                }
-                            }
-                            .padding()
-                            .background(Color.black.opacity(0.7))
-                            .cornerRadius(12)
-                            Spacer()
-                        }
-                        .padding()
+                    }
                     }
                     
                     // Simplified HUD with exercise info and rep count
