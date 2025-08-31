@@ -107,10 +107,12 @@ struct TrackingPlaceholderView: View {
     @State private var landmarks: [Landmark] = []
     @State private var poseQuality: Float = 0.0
     @State private var frameCount: Int = 0
-    @State private var repCount: Int = 0
-    @State private var leftArmFlexed: Bool = false
-    @State private var rightArmFlexed: Bool = false
-    @State private var bothArmsExtended: Bool = true
+    @State private var repCount = 0
+    @State private var leftArmFlexed = false
+    @State private var rightArmFlexed = false
+    @State private var bothArmsExtended = true
+    @State private var selectedExercise = ExerciseLibrary.shared.availableExercises[0]
+    @State private var showExerciseSelector = false
     
     var body: some View {
         NavigationView {
@@ -186,6 +188,50 @@ struct TrackingPlaceholderView: View {
                         }
                     }
                     
+                    // Simplified HUD with exercise info and rep count
+                    VStack(alignment: .leading, spacing: 12) {
+                        // Exercise selector button
+                        Button(action: {
+                            showExerciseSelector = true
+                        }) {
+                            HStack {
+                                Text(selectedExercise.name)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Image(systemName: "chevron.down")
+                            }
+                            .foregroundColor(.white)
+                        }
+                        
+                        // Exercise description
+                        Text(selectedExercise.description)
+                            .font(.body)
+                            .foregroundColor(.gray)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
+                        // Rep counter
+                        HStack {
+                            Text("Reps: \(repCount)")
+                                .font(.title)
+                                .fontWeight(.heavy)
+                                .foregroundColor(.green)
+                            Spacer()
+                            Text(selectedExercise.category.capitalized)
+                                .font(.caption)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.blue.opacity(0.3))
+                                .cornerRadius(8)
+                        }
+                    }
+                    .padding()
+                    .background(Color.black.opacity(0.8))
+                    .cornerRadius(12)
+                    .foregroundColor(.white)
+                    .padding(.top, 60)
+                    .padding(.horizontal, 20)
+                    
                     // Camera Controls
                     HStack(spacing: 20) {
                         Button("Stop Camera") {
@@ -222,49 +268,60 @@ struct TrackingPlaceholderView: View {
                         .foregroundColor(.secondary)
                     }
                 } else {
-                    Image(systemName: "camera.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.green)
-                    
-                    Text("Exercise Tracking")
-                        .font(.title)
-                        .fontWeight(.bold)
-                    
-                    Text("Real-time pose analysis with YOLO dataset")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                    
-                    Button("Start Camera") {
-                        startCamera()
+                    // Camera setup screen with exercise selection
+                    VStack(spacing: 30) {
+                        Text("PTCoach")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        
+                        Text("Exercise Tracking & Form Analysis")
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                        
+                        // Exercise selection before starting camera
+                        VStack(spacing: 15) {
+                            Text("Select Exercise:")
+                                .font(.headline)
+                            
+                            Button(action: {
+                                showExerciseSelector = true
+                            }) {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(selectedExercise.name)
+                                            .font(.title3)
+                                            .fontWeight(.semibold)
+                                        Text(selectedExercise.description)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                            .multilineTextAlignment(.leading)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(10)
+                            }
+                            .foregroundColor(.primary)
+                        }
+                        
+                        Button("Start Camera") {
+                            startCamera()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
+                    .padding()
                 }
             }
             .padding()
             .navigationTitle("Track")
-            .alert("Camera Access Needed", isPresented: $showPermissionAlert) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text("Please enable camera access for PTCoach in Settings > Privacy > Camera.")
+            .sheet(isPresented: $showExerciseSelector) {
+                ExerciseSelectionView(selectedExercise: $selectedExercise, repCount: $repCount)
             }
             .onAppear {
                 cameraPosition = savedCameraPosition == "front" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
-                
-                // Initialize bicep curl exercise tracking
-                let bicepCurlExercise = YOLOExerciseReference(
-                    exerciseId: "bicep_curl",
-                    name: "Bicep Curl",
-                    category: ["strength"],
-                    difficulty: "beginner",
-                    bodyOrientation: "standing",
-                    cameraAngle: "side_view",
-                    phases: [],
-                    repDetectionKeypoints: ["left_shoulder", "left_elbow", "left_wrist"],
-                    safetyConstraints: ["Keep elbow stationary", "Control the movement"],
-                    formCheckpoints: ["Start with arm extended", "Curl to 90+ degrees", "Return to start position"]
-                )
                 
                 // Connect pose detection to camera frames
                 cameraManager.setFrameHandler { pixelBuffer in
@@ -279,34 +336,48 @@ struct TrackingPlaceholderView: View {
                             let leftElbowAngle = DynamicAngleEngine.shared.calculateElbowAngle(landmarks: detectedLandmarks)
                             let rightElbowAngle = DynamicAngleEngine.shared.calculateRightElbowAngle(landmarks: detectedLandmarks)
                             
-                            // Rep detection for both arms bicep curls
-                            let repThreshold: CGFloat = 90.0 // degrees
-                            let leftIsFlexed = leftElbowAngle > repThreshold
-                            let rightIsFlexed = rightElbowAngle > repThreshold
-                            let bothArmsFlexed = leftIsFlexed && rightIsFlexed
-                            let bothArmsExtendedNow = leftElbowAngle < 45.0 && rightElbowAngle < 45.0
+                            // Dynamic exercise rep counting based on selected exercise
+                            let exercise = self.selectedExercise
+                            let flexThreshold = exercise.flexThreshold
+                            let extendThreshold = exercise.extendThreshold
                             
-                            // Rep counting state machine
-                            if bothArmsFlexed && !self.leftArmFlexed && !self.rightArmFlexed {
-                                // Both arms just flexed from extended position
-                                self.leftArmFlexed = true
-                                self.rightArmFlexed = true
-                                self.bothArmsExtended = false
-                            } else if bothArmsExtendedNow && (self.leftArmFlexed || self.rightArmFlexed) {
-                                // Both arms returned to extended position after being flexed - complete rep
-                                self.repCount += 1
-                                self.leftArmFlexed = false
-                                self.rightArmFlexed = false
-                                self.bothArmsExtended = true
-                                
-                                // Play sound and haptic feedback
-                                DynamicAngleEngine.shared.playRepSound()
+                            var isFlexed = false
+                            var isExtended = false
+                            
+                            switch exercise.jointType {
+                            case "elbow":
+                                isFlexed = leftElbowAngle > flexThreshold && rightElbowAngle > flexThreshold
+                                isExtended = leftElbowAngle < extendThreshold && rightElbowAngle < extendThreshold
+                            case "shoulder":
+                                let leftShoulderAngle = DynamicAngleEngine.shared.calculateShoulderFlexion(landmarks: detectedLandmarks)
+                                isFlexed = leftShoulderAngle > flexThreshold
+                                isExtended = leftShoulderAngle < extendThreshold
+                            case "knee":
+                                let kneeAngle = DynamicAngleEngine.shared.calculateKneeFlexion(landmarks: detectedLandmarks)
+                                isFlexed = kneeAngle > flexThreshold
+                                isExtended = kneeAngle < extendThreshold
+                            default:
+                                isFlexed = leftElbowAngle > flexThreshold && rightElbowAngle > flexThreshold
+                                isExtended = leftElbowAngle < extendThreshold && rightElbowAngle < extendThreshold
                             }
                             
-                            // Debug logging with bicep curl info
-                            let visibleCount = detectedLandmarks.filter { $0.isVisible }.count
-                            let repStatus = bothArmsFlexed ? "BOTH FLEXED" : bothArmsExtendedNow ? "BOTH EXTENDED" : "PARTIAL"
-                            print("🔍 BICEP CURL - Frame: \(self.frameCount), Reps: \(self.repCount), Left: \(String(format: "%.1f°", leftElbowAngle)), Right: \(String(format: "%.1f°", rightElbowAngle)), Status: \(repStatus))")
+                            // Simple 3-state rep counting: EXTENDED → FLEXED → EXTENDED = 1 rep
+                            if isExtended && !self.bothArmsExtended {
+                                // Just reached extended position
+                                self.bothArmsExtended = true
+                                if self.leftArmFlexed {
+                                    // Completed a full rep cycle
+                                    self.repCount += 1
+                                    DynamicAngleEngine.shared.playRepSound()
+                                    print("✅ REP COMPLETED! Total: \(self.repCount)")
+                                }
+                                self.leftArmFlexed = false
+                            } else if isFlexed && self.bothArmsExtended {
+                                // Just reached flexed position from extended
+                                self.leftArmFlexed = true
+                                self.bothArmsExtended = false
+                                print("💪 FLEXED POSITION REACHED")
+                            }
                         }
                     }
                 }

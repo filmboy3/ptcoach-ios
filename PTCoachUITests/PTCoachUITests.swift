@@ -10,37 +10,41 @@ final class PTCoachUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         
-        // Navigate to Track tab
-        app.tabBars.buttons["Track"].tap()
+        // Wait for camera to initialize and pose detection to start
+        sleep(5)
         
-        // Start camera
-        app.buttons["Start Camera"].tap()
+        // Capture starting position (arms at sides)
+        let startScreenshot = app.screenshot()
+        let startAttachment = XCTAttachment(screenshot: startScreenshot)
+        startAttachment.name = "bicep-curl-start-position"
+        startAttachment.lifetime = .keepAlways
+        add(startAttachment)
         
-        // Wait for camera to initialize
         sleep(2)
         
-        // Burst capture during bicep curl testing
-        for i in 1...30 {
-            let shot = XCUIScreen.main.screenshot()
-            let attach = XCTAttachment(screenshot: shot)
-            attach.name = String(format: "bicep-curl-burst-%03d", i)
-            attach.lifetime = .keepAlways
-            add(attach)
+        // Take burst screenshots during bicep curl exercise sequence
+        for i in 1...25 {
+            let screenshot = app.screenshot()
+            let attachment = XCTAttachment(screenshot: screenshot)
+            attachment.name = "bicep-curl-sequence-\(String(format: "%03d", i))"
+            attachment.lifetime = .keepAlways
+            add(attachment)
             
-            // 0.5 second intervals for good motion capture
-            RunLoop.current.run(until: Date().addingTimeInterval(0.5))
+            // Wait 0.6 seconds between shots for natural movement
+            usleep(600000)
         }
+        
+        // Final position capture
+        let endScreenshot = app.screenshot()
+        let endAttachment = XCTAttachment(screenshot: endScreenshot)
+        endAttachment.name = "bicep-curl-end-position"
+        endAttachment.lifetime = .keepAlways
+        add(endAttachment)
     }
     
     func testPoseDetectionScreenshots() throws {
         let app = XCUIApplication()
         app.launch()
-        
-        // Navigate to Track tab
-        app.tabBars.buttons["Track"].tap()
-        
-        // Start camera
-        app.buttons["Start Camera"].tap()
         
         // Wait for pose detection to stabilize
         sleep(3)
@@ -63,12 +67,6 @@ final class PTCoachUITests: XCTestCase {
     func testDebugHUDCapture() throws {
         let app = XCUIApplication()
         app.launch()
-        
-        // Navigate to Track tab
-        app.tabBars.buttons["Track"].tap()
-        
-        // Start camera
-        app.buttons["Start Camera"].tap()
         
         // Wait for full initialization
         sleep(3)

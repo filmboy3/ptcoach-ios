@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,11 +30,13 @@
 		5FEC47835E608879B05C8029 /* DynamicAngleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */; };
 		86B412F2690816C7E9AE2BA0 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AA5DAE0157802EB80219F /* CameraManager.swift */; };
 		8C6F6E33FC0837AF565EE609 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD33B48C18A8B4C2625B15BD /* Vision.framework */; };
+		990F88016F1699AD7DF5F82C /* ExerciseSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51757A3217100AEF8491027F /* ExerciseSelectionView.swift */; };
 		A3932E7B2ADE611D5398C095 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */; };
 		AE75BCB5C689CF946352017B /* CoreMLPoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */; };
 		B12FFDDC434A127B739A9331 /* ProgressViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C05E4D79AB25A3B55279F /* ProgressViewScreen.swift */; };
 		B1FB966885FA117BFAFEBEE9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA24FE66BEB355CC6BFAF5F /* AudioToolbox.framework */; };
 		B2ABA8E9AEBD1570FF9835B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 334B8D901F5A3467010A1336 /* CoreGraphics.framework */; };
+		B36F618628F0B44631C821E9 /* ExerciseLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD3EA68A12B1B226C2F280 /* ExerciseLibrary.swift */; };
 		BECB35975C39D9DA17DE44E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E48870574C5265F661DF365 /* ContentView.swift */; };
 		C1AFD145E4BDCEA6FF0A8257 /* LiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */; };
 		C834082131C075351FAE2822 /* complete_yolo_dataset_robust.json in Resources */ = {isa = PBXBuildFile; fileRef = B570AA9375662830AD249A4C /* complete_yolo_dataset_robust.json */; };
@@ -70,6 +72,7 @@
 		415BF8504A8E4A1343F88CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4984849A47375DE6F95D4459 /* ExerciseLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibraryManager.swift; sourceTree = "<group>"; };
 		5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTrackingView.swift; sourceTree = "<group>"; };
+		51757A3217100AEF8491027F /* ExerciseSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectionView.swift; sourceTree = "<group>"; };
 		64229983C84D50CDEC769AD7 /* SessionStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStatsView.swift; sourceTree = "<group>"; };
 		75BF4C0FBF9F374275DEB74D /* ExerciseDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDashboardView.swift; sourceTree = "<group>"; };
 		85564D982881E866A37A52B0 /* ExerciseSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectorView.swift; sourceTree = "<group>"; };
@@ -88,14 +91,15 @@
 		C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
 		CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		CCC17614930896829C0A2026 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
-		D1AE284EBAE6D866D2F82469 /* AlyssaRep.m4a */ = {isa = PBXFileReference; path = AlyssaRep.m4a; sourceTree = "<group>"; };
+		D1AE284EBAE6D866D2F82469 /* AlyssaRep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = AlyssaRep.m4a; sourceTree = "<group>"; };
 		D9CBE22B62AEC24DD4407759 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseModels.swift; sourceTree = "<group>"; };
 		DC16B5C04ACEDE508C1470F7 /* YOLOExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseManager.swift; sourceTree = "<group>"; };
 		EBA971A69027D4DA2F7D3738 /* PTCoachUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PTCoachUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED463CE2F7BFE189669F8AC6 /* TrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainView.swift; sourceTree = "<group>"; };
+		EEAD3EA68A12B1B226C2F280 /* ExerciseLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibrary.swift; sourceTree = "<group>"; };
 		F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAngleEngine.swift; sourceTree = "<group>"; };
-		F50D17AB2DCF97F01E63831E /* PTCoach.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PTCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50D17AB2DCF97F01E63831E /* PTCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PTCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F60B94354B52309244AB2F0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FD33B48C18A8B4C2625B15BD /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -180,6 +184,7 @@
 				9F1AA5DAE0157802EB80219F /* CameraManager.swift */,
 				CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */,
 				75BF4C0FBF9F374275DEB74D /* ExerciseDashboardView.swift */,
+				51757A3217100AEF8491027F /* ExerciseSelectionView.swift */,
 				85564D982881E866A37A52B0 /* ExerciseSelectorView.swift */,
 				5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */,
 				A8B55BFB73BE3DCCDBD2A3FF /* LibraryView.swift */,
@@ -218,6 +223,7 @@
 		C664AD6D84FBA68208F68CDA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EEAD3EA68A12B1B226C2F280 /* ExerciseLibrary.swift */,
 				7E860B19884B8B2DED365A06 /* Pose */,
 			);
 			path = Models;
@@ -282,7 +288,6 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					AAAFEE3E8D29B8015926DE0D = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					B06109A262C2A6439C7017D3 = {
@@ -302,7 +307,6 @@
 			);
 			mainGroup = 0E32CD0C7FA0672023C67E00;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -337,7 +341,9 @@
 				AE75BCB5C689CF946352017B /* CoreMLPoseProvider.swift in Sources */,
 				5FEC47835E608879B05C8029 /* DynamicAngleEngine.swift in Sources */,
 				3C9585439865E012E67381F1 /* ExerciseDashboardView.swift in Sources */,
+				B36F618628F0B44631C821E9 /* ExerciseLibrary.swift in Sources */,
 				5E25B544C30EBCBE09961F10 /* ExerciseLibraryManager.swift in Sources */,
+				990F88016F1699AD7DF5F82C /* ExerciseSelectionView.swift in Sources */,
 				25D13C62CD4D07390C564F36 /* ExerciseSelectorView.swift in Sources */,
 				0C37B5420586E90E4450C2A5 /* ExerciseTrackingView.swift in Sources */,
 				F2CFF02BE76A02349674307D /* Geometry.swift in Sources */,
@@ -464,7 +470,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 28UE768XAH;
 				INFOPLIST_FILE = PTCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -559,7 +565,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 28UE768XAH;
 				INFOPLIST_FILE = PTCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

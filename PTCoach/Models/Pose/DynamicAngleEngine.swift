@@ -3,6 +3,7 @@ import CoreGraphics
 import simd
 import UIKit
 import AudioToolbox
+import AVFoundation
 
 // MARK: - Dynamic Exercise Models
 
@@ -266,25 +267,43 @@ class DynamicAngleEngine: ObservableObject {
         return Geometry.angle(rightShoulder.cgPoint, rightElbow.cgPoint, rightWrist.cgPoint)
     }
     
+    private var audioPlayer: AVAudioPlayer?
+    
     func playRepSound() {
-        // Play AlyssaRep.m4a sound
-        guard let soundURL = Bundle.main.url(forResource: "AlyssaRep", withExtension: "m4a") else {
-            print("❌ Could not find AlyssaRep.m4a file")
-            return
+        do {
+            // Configure audio session to play even when phone is on silent
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
+            try session.setActive(true, options: [])
+            
+            // Play AlyssaRep.m4a sound using AVAudioPlayer
+            guard let soundURL = Bundle.main.url(forResource: "AlyssaRep", withExtension: "m4a") else {
+                print("❌ Could not find AlyssaRep.m4a file in bundle")
+                // Fallback to system sound
+                AudioServicesPlaySystemSound(1057)
+                return
+            }
+            
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.numberOfLoops = 0
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+            
+            print("🔊 Playing AlyssaRep.m4a with AVAudioPlayer")
+            
+        } catch {
+            print("❌ Audio error: \(error)")
+            // Fallback to system sound
+            AudioServicesPlaySystemSound(1057)
         }
-        
-        var soundID: SystemSoundID = 0
-        AudioServicesCreateSystemSoundID(soundURL as CFURL, &soundID)
-        AudioServicesPlaySystemSound(soundID)
         
         // Add haptic feedback
         let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
         impactFeedback.impactOccurred()
         
-        print("🔊 Rep completed! Playing sound and haptic feedback")
+        print("🔊 Rep completed! Audio and haptic feedback triggered")
     }
-    
-    func calculateShoulderFlexion(landmarks: [Landmark]) -> CGFloat {
+    public func calculateShoulderFlexion(landmarks: [Landmark]) -> CGFloat {
         guard let leftShoulder = landmarks.first(where: { $0.jointType?.name == "left_shoulder" }),
               let leftElbow = landmarks.first(where: { $0.jointType?.name == "left_elbow" }),
               let leftHip = landmarks.first(where: { $0.jointType?.name == "left_hip" }),
@@ -292,7 +311,18 @@ class DynamicAngleEngine: ObservableObject {
             return 0
         }
         
-        return Geometry.shoulderFlexionAngle(hip: leftHip, shoulder: leftShoulder, wrist: leftElbow) ?? 0
+        return Geometry.angle(leftHip.cgPoint, leftShoulder.cgPoint, leftElbow.cgPoint)
+    }
+    
+    public func calculateKneeFlexion(landmarks: [Landmark]) -> CGFloat {
+        guard let leftHip = landmarks.first(where: { $0.jointType?.name == "left_hip" }),
+              let leftKnee = landmarks.first(where: { $0.jointType?.name == "left_knee" }),
+              let leftAnkle = landmarks.first(where: { $0.jointType?.name == "left_ankle" }),
+              leftHip.confidence > 0.5, leftKnee.confidence > 0.5, leftAnkle.confidence > 0.5 else {
+            return 0
+        }
+        
+        return Geometry.kneeFlexionAngle(hip: leftHip, knee: leftKnee, ankle: leftAnkle) ?? 0
     }
     
     private func updateAngleTracking(angle: CGFloat, timestamp: CFAbsoluteTime) {
