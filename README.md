@@ -90,3 +90,4 @@ PTCoach is an iOS app that uses CoreML and Vision framework for real-time pose d
 - **Device Required:** Physical iOS device (pose detection doesn't work in simulator)
 - **Camera Position:** Side view recommended for shoulder exercises
 - **Debug Output:** Console logs show pose detection metrics and angle calculations
+# ptcoach-ios
