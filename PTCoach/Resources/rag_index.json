@@ -1,0 +1,122 @@
+[
+  {
+    "id": "NICE-NG59-001",
+    "title": "NICE NG59: Low Back Pain Exercise Guidelines",
+    "snippet": "Exercise therapy should be considered for people with low back pain, with or without sciatica. A structured exercise programme should include activities to improve physical fitness (aerobic capacity, muscle strength and flexibility).",
+    "source": "NICE Guideline NG59 (2016) - Low back pain and sciatica"
+  },
+  {
+    "id": "NICE-NG59-002", 
+    "title": "NICE NG59: Self-Management for Low Back Pain",
+    "snippet": "Advise people with low back pain to stay physically active and continue with normal daily activities. Bed rest is not recommended as a treatment for low back pain.",
+    "source": "NICE Guideline NG59 (2016) - Low back pain and sciatica"
+  },
+  {
+    "id": "AAOS-ACL-001",
+    "title": "AAOS ACL Injury: Range of Motion Priority",
+    "snippet": "Early range of motion exercises are recommended following ACL injury to prevent joint stiffness. Full knee extension should be achieved as soon as tolerated, typically within the first 1-2 weeks.",
+    "source": "AAOS Clinical Practice Guideline: ACL Injuries (2022)"
+  },
+  {
+    "id": "AAOS-ACL-002",
+    "title": "AAOS ACL Injury: Quadriceps Strengthening",
+    "snippet": "Quadriceps strengthening exercises should begin early in rehabilitation. Progressive resistance training helps restore muscle strength and function following ACL injury.",
+    "source": "AAOS Clinical Practice Guideline: ACL Injuries (2022)"
+  },
+  {
+    "id": "APTA-LBP-001",
+    "title": "APTA Low Back Pain: Movement-Based Classification",
+    "snippet": "Treatment should be matched to patient classification. Movement-based approaches focus on specific directional preferences and movement impairments to guide exercise selection.",
+    "source": "APTA Clinical Practice Guidelines: Low Back Pain (2021)"
+  },
+  {
+    "id": "ROM-KNEE-001",
+    "title": "Normal Knee Range of Motion",
+    "snippet": "Normal knee flexion ranges from 0° (full extension) to approximately 130-140° of flexion. Functional activities typically require 90-120° of knee flexion.",
+    "source": "Normative Range of Motion Reference (Reese & Bandy, 2017)"
+  },
+  {
+    "id": "ROM-SHOULDER-001",
+    "title": "Normal Shoulder Flexion Range",
+    "snippet": "Normal shoulder flexion ranges from 0° to 150-180°. Overhead activities typically require at least 120° of shoulder flexion for functional movement.",
+    "source": "Normative Range of Motion Reference (Reese & Bandy, 2017)"
+  },
+  {
+    "id": "ROM-HIP-001",
+    "title": "Normal Hip Flexion Range",
+    "snippet": "Normal hip flexion ranges from 0° to approximately 120-125°. Hip flexion is essential for activities like sitting, squatting, and stair climbing.",
+    "source": "Normative Range of Motion Reference (Reese & Bandy, 2017)"
+  },
+  {
+    "id": "STS-FUNC-001",
+    "title": "Sit-to-Stand Functional Importance",
+    "snippet": "The sit-to-stand movement is a fundamental functional activity requiring coordinated hip, knee, and ankle movement. It's essential for independence in daily activities.",
+    "source": "Functional Movement Assessment Literature"
+  },
+  {
+    "id": "STS-BIOMECH-001",
+    "title": "Sit-to-Stand Biomechanics",
+    "snippet": "Successful sit-to-stand requires adequate knee extension strength, hip flexion mobility, and ankle dorsiflexion. The movement involves forward trunk lean followed by hip and knee extension.",
+    "source": "Biomechanical Analysis of Sit-to-Stand (Schenkman et al., 1990)"
+  },
+  {
+    "id": "EXERCISE-SAFETY-001",
+    "title": "Exercise Safety Principles",
+    "snippet": "Exercise should be performed within comfortable limits. Stop if you experience sharp pain, dizziness, or unusual discomfort. Gradual progression is key to safe exercise participation.",
+    "source": "General Exercise Safety Guidelines"
+  },
+  {
+    "id": "EXERCISE-PROG-001",
+    "title": "Exercise Progression Principles",
+    "snippet": "Progressive overload should be applied gradually through increases in repetitions, duration, or range of motion. Allow adequate recovery time between exercise sessions.",
+    "source": "Exercise Prescription Guidelines (ACSM, 2022)"
+  },
+  {
+    "id": "PAIN-MONITOR-001",
+    "title": "Pain Monitoring During Exercise",
+    "snippet": "Some mild discomfort during exercise is normal, but sharp or severe pain is not. Use a 0-10 pain scale: exercise should not increase pain beyond 3-4/10 during activity.",
+    "source": "Pain Science and Exercise Guidelines"
+  },
+  {
+    "id": "KNEE-FLEX-BENEFIT-001",
+    "title": "Benefits of Knee Flexion Exercises",
+    "snippet": "Knee flexion exercises help maintain joint mobility, strengthen surrounding muscles, and prevent stiffness. Regular movement promotes joint health and functional capacity.",
+    "source": "Joint Mobility and Exercise Literature"
+  },
+  {
+    "id": "SHOULDER-FLEX-BENEFIT-001",
+    "title": "Benefits of Shoulder Flexion Exercises",
+    "snippet": "Shoulder flexion exercises improve overhead reach capacity, maintain joint mobility, and strengthen the shoulder complex. Important for daily activities like reaching and lifting.",
+    "source": "Shoulder Rehabilitation Literature"
+  },
+  {
+    "id": "MOVEMENT-QUALITY-001",
+    "title": "Movement Quality vs Quantity",
+    "snippet": "Focus on controlled, quality movement rather than speed or excessive repetitions. Proper form reduces injury risk and maximizes exercise benefits.",
+    "source": "Movement Quality Assessment Guidelines"
+  },
+  {
+    "id": "FATIGUE-MANAGEMENT-001",
+    "title": "Managing Exercise Fatigue",
+    "snippet": "Recognize signs of fatigue including decreased coordination, increased effort, or form breakdown. Rest when needed and avoid exercising through excessive fatigue.",
+    "source": "Exercise Fatigue and Recovery Guidelines"
+  },
+  {
+    "id": "CONSISTENCY-001",
+    "title": "Exercise Consistency Benefits",
+    "snippet": "Regular, consistent exercise is more beneficial than sporadic intense sessions. Aim for frequent, moderate exercise rather than infrequent vigorous activity.",
+    "source": "Exercise Adherence Research"
+  },
+  {
+    "id": "INDIVIDUAL-VARIATION-001",
+    "title": "Individual Exercise Responses",
+    "snippet": "Exercise responses vary between individuals based on factors like age, fitness level, and medical history. Programs should be individualized to personal capabilities and goals.",
+    "source": "Individualized Exercise Programming"
+  },
+  {
+    "id": "PROFESSIONAL-GUIDANCE-001",
+    "title": "When to Seek Professional Guidance",
+    "snippet": "Consult a healthcare provider or physical therapist if you experience persistent pain, have specific medical conditions, or need personalized exercise recommendations.",
+    "source": "Healthcare Professional Consultation Guidelines"
+  }
+]

@@ -1,0 +1,488 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01CDE535B37B0C8AA0C2740C /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B55BFB73BE3DCCDBD2A3FF /* LibraryView.swift */; };
+		03A8462076D8535CD467E330 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92069F898AFA0031C8CBBD77 /* CoreVideo.framework */; };
+		0C37B5420586E90E4450C2A5 /* ExerciseTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */; };
+		183527CAE685C0D9A1909603 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CBE22B62AEC24DD4407759 /* AVFoundation.framework */; };
+		183EEA25058505B6A8633632 /* AngleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE7A1884331E39B28EFF393 /* AngleEngine.swift */; };
+		1C8FB782CE241C265DF9D5FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB3D591C929EEFB7498BC71 /* SwiftUI.framework */; };
+		21F65FD17F72B360F1423D38 /* PoseOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250D389CFBD0B4AD516DA530 /* PoseOverlayView.swift */; };
+		25D13C62CD4D07390C564F36 /* ExerciseSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85564D982881E866A37A52B0 /* ExerciseSelectorView.swift */; };
+		277B96AD7E48EB1AFED75D72 /* YOLOExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC16B5C04ACEDE508C1470F7 /* YOLOExerciseManager.swift */; };
+		27B28D48D0CD308FC0BB34E4 /* NetworkCameraProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8C4C5B4036E51E20A022A5 /* NetworkCameraProvider.swift */; };
+		2868487BC57915BC4D380363 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 162A73E0D644926E5C9C73A9 /* Foundation.framework */; };
+		2A0F4CC6F2F0AFA497617349 /* MockPoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26132FBE670BAC5ED2289F68 /* MockPoseProvider.swift */; };
+		3C9585439865E012E67381F1 /* ExerciseDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BF4C0FBF9F374275DEB74D /* ExerciseDashboardView.swift */; };
+		407B8E8CDC91A4AB12C07853 /* PoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F2ED3371F399E0058E263 /* PoseProvider.swift */; };
+		4619CA817D3B94FE22E05BEE /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2C6A34D6561BEEB2151C90 /* CoreMedia.framework */; };
+		528F55FF2B73426AE78C8B97 /* PTCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A59FAEF812AE3408FDCF33 /* PTCoachApp.swift */; };
+		53A15820C50D8723E03CC0EE /* TrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED463CE2F7BFE189669F8AC6 /* TrainView.swift */; };
+		58EF69E02356CA1614F55AA1 /* YOLOExerciseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */; };
+		5E25B544C30EBCBE09961F10 /* ExerciseLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4984849A47375DE6F95D4459 /* ExerciseLibraryManager.swift */; };
+		5FEC47835E608879B05C8029 /* DynamicAngleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */; };
+		86B412F2690816C7E9AE2BA0 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AA5DAE0157802EB80219F /* CameraManager.swift */; };
+		8C6F6E33FC0837AF565EE609 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD33B48C18A8B4C2625B15BD /* Vision.framework */; };
+		A3932E7B2ADE611D5398C095 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */; };
+		AE75BCB5C689CF946352017B /* CoreMLPoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */; };
+		B12FFDDC434A127B739A9331 /* ProgressViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C05E4D79AB25A3B55279F /* ProgressViewScreen.swift */; };
+		B1FB966885FA117BFAFEBEE9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA24FE66BEB355CC6BFAF5F /* AudioToolbox.framework */; };
+		B2ABA8E9AEBD1570FF9835B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 334B8D901F5A3467010A1336 /* CoreGraphics.framework */; };
+		BECB35975C39D9DA17DE44E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E48870574C5265F661DF365 /* ContentView.swift */; };
+		C1AFD145E4BDCEA6FF0A8257 /* LiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */; };
+		C834082131C075351FAE2822 /* complete_yolo_dataset_robust.json in Resources */ = {isa = PBXBuildFile; fileRef = B570AA9375662830AD249A4C /* complete_yolo_dataset_robust.json */; };
+		D8CE4A6F934F8F4514EBCB52 /* rag_index.json in Resources */ = {isa = PBXBuildFile; fileRef = A8F778264CCEA43E06647405 /* rag_index.json */; };
+		E7E0B0739F2C4B8E50AE1D08 /* SessionStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64229983C84D50CDEC769AD7 /* SessionStatsView.swift */; };
+		F2CFF02BE76A02349674307D /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC17614930896829C0A2026 /* Geometry.swift */; };
+		F68060E3BB5146A9C3A3FD3F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 259CA05E2C241BD03C7686C0 /* UIKit.framework */; };
+		F6E1BB728FDDB65061005BB0 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172717007981B1DAFD08F06B /* CoreML.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E2C6A34D6561BEEB2151C90 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		162A73E0D644926E5C9C73A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		172717007981B1DAFD08F06B /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
+		250D389CFBD0B4AD516DA530 /* PoseOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseOverlayView.swift; sourceTree = "<group>"; };
+		259CA05E2C241BD03C7686C0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		26132FBE670BAC5ED2289F68 /* MockPoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPoseProvider.swift; sourceTree = "<group>"; };
+		2EE7A1884331E39B28EFF393 /* AngleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngleEngine.swift; sourceTree = "<group>"; };
+		334B8D901F5A3467010A1336 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3E48870574C5265F661DF365 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		415BF8504A8E4A1343F88CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4984849A47375DE6F95D4459 /* ExerciseLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibraryManager.swift; sourceTree = "<group>"; };
+		5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTrackingView.swift; sourceTree = "<group>"; };
+		64229983C84D50CDEC769AD7 /* SessionStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStatsView.swift; sourceTree = "<group>"; };
+		75BF4C0FBF9F374275DEB74D /* ExerciseDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDashboardView.swift; sourceTree = "<group>"; };
+		85564D982881E866A37A52B0 /* ExerciseSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectorView.swift; sourceTree = "<group>"; };
+		92069F898AFA0031C8CBBD77 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		953F2ED3371F399E0058E263 /* PoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseProvider.swift; sourceTree = "<group>"; };
+		9B5C05E4D79AB25A3B55279F /* ProgressViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewScreen.swift; sourceTree = "<group>"; };
+		9C8C4C5B4036E51E20A022A5 /* NetworkCameraProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCameraProvider.swift; sourceTree = "<group>"; };
+		9DB3D591C929EEFB7498BC71 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		9F1AA5DAE0157802EB80219F /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		A8B55BFB73BE3DCCDBD2A3FF /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		A8F778264CCEA43E06647405 /* rag_index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rag_index.json; sourceTree = "<group>"; };
+		AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMLPoseProvider.swift; sourceTree = "<group>"; };
+		AEA24FE66BEB355CC6BFAF5F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B570AA9375662830AD249A4C /* complete_yolo_dataset_robust.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = complete_yolo_dataset_robust.json; sourceTree = "<group>"; };
+		B7A59FAEF812AE3408FDCF33 /* PTCoachApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTCoachApp.swift; sourceTree = "<group>"; };
+		C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
+		CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		CCC17614930896829C0A2026 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		D9CBE22B62AEC24DD4407759 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseModels.swift; sourceTree = "<group>"; };
+		DC16B5C04ACEDE508C1470F7 /* YOLOExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseManager.swift; sourceTree = "<group>"; };
+		ED463CE2F7BFE189669F8AC6 /* TrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainView.swift; sourceTree = "<group>"; };
+		F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAngleEngine.swift; sourceTree = "<group>"; };
+		F50D17AB2DCF97F01E63831E /* PTCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PTCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD33B48C18A8B4C2625B15BD /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		37F286F108D3E00F277D3E8E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183527CAE685C0D9A1909603 /* AVFoundation.framework in Frameworks */,
+				8C6F6E33FC0837AF565EE609 /* Vision.framework in Frameworks */,
+				F6E1BB728FDDB65061005BB0 /* CoreML.framework in Frameworks */,
+				1C8FB782CE241C265DF9D5FD /* SwiftUI.framework in Frameworks */,
+				F68060E3BB5146A9C3A3FD3F /* UIKit.framework in Frameworks */,
+				2868487BC57915BC4D380363 /* Foundation.framework in Frameworks */,
+				B2ABA8E9AEBD1570FF9835B1 /* CoreGraphics.framework in Frameworks */,
+				B1FB966885FA117BFAFEBEE9 /* AudioToolbox.framework in Frameworks */,
+				03A8462076D8535CD467E330 /* CoreVideo.framework in Frameworks */,
+				4619CA817D3B94FE22E05BEE /* CoreMedia.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E32CD0C7FA0672023C67E00 = {
+			isa = PBXGroup;
+			children = (
+				C20BC5C5D78E8C04D3CD5189 /* PTCoach */,
+				1B2F110DC51C843AE01B0BEA /* Frameworks */,
+				CC919EF41B7EEA20D9C73559 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1B2F110DC51C843AE01B0BEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AEA24FE66BEB355CC6BFAF5F /* AudioToolbox.framework */,
+				D9CBE22B62AEC24DD4407759 /* AVFoundation.framework */,
+				334B8D901F5A3467010A1336 /* CoreGraphics.framework */,
+				0E2C6A34D6561BEEB2151C90 /* CoreMedia.framework */,
+				172717007981B1DAFD08F06B /* CoreML.framework */,
+				92069F898AFA0031C8CBBD77 /* CoreVideo.framework */,
+				162A73E0D644926E5C9C73A9 /* Foundation.framework */,
+				9DB3D591C929EEFB7498BC71 /* SwiftUI.framework */,
+				259CA05E2C241BD03C7686C0 /* UIKit.framework */,
+				FD33B48C18A8B4C2625B15BD /* Vision.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7E860B19884B8B2DED365A06 /* Pose */ = {
+			isa = PBXGroup;
+			children = (
+				2EE7A1884331E39B28EFF393 /* AngleEngine.swift */,
+				AE4AFC18CC36B3422D1CC6B3 /* CoreMLPoseProvider.swift */,
+				F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */,
+				4984849A47375DE6F95D4459 /* ExerciseLibraryManager.swift */,
+				CCC17614930896829C0A2026 /* Geometry.swift */,
+				26132FBE670BAC5ED2289F68 /* MockPoseProvider.swift */,
+				9C8C4C5B4036E51E20A022A5 /* NetworkCameraProvider.swift */,
+				953F2ED3371F399E0058E263 /* PoseProvider.swift */,
+				DC16B5C04ACEDE508C1470F7 /* YOLOExerciseManager.swift */,
+				DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */,
+			);
+			path = Pose;
+			sourceTree = "<group>";
+		};
+		A2F75EAF22FF40B398234DA3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9F1AA5DAE0157802EB80219F /* CameraManager.swift */,
+				CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */,
+				75BF4C0FBF9F374275DEB74D /* ExerciseDashboardView.swift */,
+				85564D982881E866A37A52B0 /* ExerciseSelectorView.swift */,
+				5033EC3C249571B73F6CABFF /* ExerciseTrackingView.swift */,
+				A8B55BFB73BE3DCCDBD2A3FF /* LibraryView.swift */,
+				C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */,
+				250D389CFBD0B4AD516DA530 /* PoseOverlayView.swift */,
+				9B5C05E4D79AB25A3B55279F /* ProgressViewScreen.swift */,
+				64229983C84D50CDEC769AD7 /* SessionStatsView.swift */,
+				ED463CE2F7BFE189669F8AC6 /* TrainView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C0EC34DA816E0F0FA6316212 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B570AA9375662830AD249A4C /* complete_yolo_dataset_robust.json */,
+				A8F778264CCEA43E06647405 /* rag_index.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C20BC5C5D78E8C04D3CD5189 /* PTCoach */ = {
+			isa = PBXGroup;
+			children = (
+				3E48870574C5265F661DF365 /* ContentView.swift */,
+				415BF8504A8E4A1343F88CC6 /* Info.plist */,
+				B7A59FAEF812AE3408FDCF33 /* PTCoachApp.swift */,
+				C664AD6D84FBA68208F68CDA /* Models */,
+				C0EC34DA816E0F0FA6316212 /* Resources */,
+				A2F75EAF22FF40B398234DA3 /* Views */,
+			);
+			path = PTCoach;
+			sourceTree = "<group>";
+		};
+		C664AD6D84FBA68208F68CDA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7E860B19884B8B2DED365A06 /* Pose */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CC919EF41B7EEA20D9C73559 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F50D17AB2DCF97F01E63831E /* PTCoach.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AAAFEE3E8D29B8015926DE0D /* PTCoach */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65CEC17A756579878B513812 /* Build configuration list for PBXNativeTarget "PTCoach" */;
+			buildPhases = (
+				A074DE6516A8C1D177632613 /* Sources */,
+				9317790A9657F4B2AFEF2F2F /* Resources */,
+				37F286F108D3E00F277D3E8E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PTCoach;
+			packageProductDependencies = (
+			);
+			productName = PTCoach;
+			productReference = F50D17AB2DCF97F01E63831E /* PTCoach.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0904502D75E939D69D4A72AC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AAAFEE3E8D29B8015926DE0D = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DADE33AE8268623C610577D0 /* Build configuration list for PBXProject "PTCoach" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0E32CD0C7FA0672023C67E00;
+			minimizedProjectReferenceProxies = 1;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AAAFEE3E8D29B8015926DE0D /* PTCoach */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9317790A9657F4B2AFEF2F2F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C834082131C075351FAE2822 /* complete_yolo_dataset_robust.json in Resources */,
+				D8CE4A6F934F8F4514EBCB52 /* rag_index.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A074DE6516A8C1D177632613 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183EEA25058505B6A8633632 /* AngleEngine.swift in Sources */,
+				86B412F2690816C7E9AE2BA0 /* CameraManager.swift in Sources */,
+				A3932E7B2ADE611D5398C095 /* CameraPreviewView.swift in Sources */,
+				BECB35975C39D9DA17DE44E8 /* ContentView.swift in Sources */,
+				AE75BCB5C689CF946352017B /* CoreMLPoseProvider.swift in Sources */,
+				5FEC47835E608879B05C8029 /* DynamicAngleEngine.swift in Sources */,
+				3C9585439865E012E67381F1 /* ExerciseDashboardView.swift in Sources */,
+				5E25B544C30EBCBE09961F10 /* ExerciseLibraryManager.swift in Sources */,
+				25D13C62CD4D07390C564F36 /* ExerciseSelectorView.swift in Sources */,
+				0C37B5420586E90E4450C2A5 /* ExerciseTrackingView.swift in Sources */,
+				F2CFF02BE76A02349674307D /* Geometry.swift in Sources */,
+				01CDE535B37B0C8AA0C2740C /* LibraryView.swift in Sources */,
+				C1AFD145E4BDCEA6FF0A8257 /* LiveSessionView.swift in Sources */,
+				2A0F4CC6F2F0AFA497617349 /* MockPoseProvider.swift in Sources */,
+				27B28D48D0CD308FC0BB34E4 /* NetworkCameraProvider.swift in Sources */,
+				528F55FF2B73426AE78C8B97 /* PTCoachApp.swift in Sources */,
+				21F65FD17F72B360F1423D38 /* PoseOverlayView.swift in Sources */,
+				407B8E8CDC91A4AB12C07853 /* PoseProvider.swift in Sources */,
+				B12FFDDC434A127B739A9331 /* ProgressViewScreen.swift in Sources */,
+				E7E0B0739F2C4B8E50AE1D08 /* SessionStatsView.swift in Sources */,
+				53A15820C50D8723E03CC0EE /* TrainView.swift in Sources */,
+				277B96AD7E48EB1AFED75D72 /* YOLOExerciseManager.swift in Sources */,
+				58EF69E02356CA1614F55AA1 /* YOLOExerciseModels.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2CCF8964533C44F9CF73C49C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6EA4B8681B299BC7268DFE18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28UE768XAH;
+				INFOPLIST_FILE = PTCoach/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ptcoach.PTCoach;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		943312BE7A606D54596A534A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F71A05A8BA534E10AF039EA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28UE768XAH;
+				INFOPLIST_FILE = PTCoach/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ptcoach.PTCoach;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		65CEC17A756579878B513812 /* Build configuration list for PBXNativeTarget "PTCoach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EA4B8681B299BC7268DFE18 /* Debug */,
+				F71A05A8BA534E10AF039EA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DADE33AE8268623C610577D0 /* Build configuration list for PBXProject "PTCoach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CCF8964533C44F9CF73C49C /* Debug */,
+				943312BE7A606D54596A534A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0904502D75E939D69D4A72AC /* Project object */;
+}
