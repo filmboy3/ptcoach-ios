@@ -13,6 +13,8 @@ struct LiveSessionView: View {
     let exerciseType: ExerciseType
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var sessionManager = SessionManager()
+    @StateObject private var integratedProcessor = IntegratedExerciseProcessor()
+    @State private var showTestingInterface = false
     
     var body: some View {
         ZStack {
@@ -41,9 +43,59 @@ struct LiveSessionView: View {
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(8)
+                        
+                        Spacer()
+                        
+                        // Enhanced Testing Interface Toggle
+                        HStack {
+                            Button(showTestingInterface ? "Hide Testing" : "Show Testing") {
+                                showTestingInterface.toggle()
+                            }
+                            .padding(8)
+                            .background(Color.purple.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(6)
+                            .font(.caption)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        
+                        // Bottom controls
+                        HStack {
+                            Button("Back") {
+                                // Navigation handled by NavigationView
+                            }
+                            .padding()
+                            .background(Color.gray.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            
+                            Spacer()
+                            
+                            Text(sessionManager.feedbackMessage)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.blue.opacity(0.8))
+                                .cornerRadius(8)
+                            
+                            Spacer()
+                            
+                            Button("Reset") {
+                                sessionManager.reset()
+                                integratedProcessor.reset()
+                            }
+                            .padding()
+                            .background(Color.red.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                        }
+                        .padding()
                     }
                 )
                 .ignoresSafeArea()
+            
             #else
             CameraPreview(session: cameraManager.session)
                 .ignoresSafeArea()
@@ -138,16 +190,46 @@ struct LiveSessionView: View {
                         .cornerRadius(10)
                 }
                 .padding()
+                
+                // Enhanced Testing Interface Toggle
+                HStack {
+                    Button(showTestingInterface ? "Hide Testing" : "Show Testing") {
+                        showTestingInterface.toggle()
+                    }
+                    .padding(8)
+                    .background(Color.purple.opacity(0.8))
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                    .font(.caption)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal)
+            }
+            
+            // Enhanced Testing Interface Overlay
+            if showTestingInterface {
+                VStack {
+                    Spacer()
+                    ExerciseTestingView(integratedProcessor: integratedProcessor)
+                        .background(Color.black.opacity(0.9))
+                        .cornerRadius(12)
+                        .padding()
+                }
+                .transition(.move(edge: .bottom))
+                .animation(.easeInOut, value: showTestingInterface)
             }
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             sessionManager.startSession(for: exerciseType)
-            // Connect camera frames to session manager processing
+            integratedProcessor.configureExercise(exerciseType)
+            // Connect camera frames to both processors
             cameraManager.setFrameHandler { pixelBuffer in
                 Task { @MainActor in
                     sessionManager.enqueueFrame(pixelBuffer)
+                    await integratedProcessor.processFrame(pixelBuffer)
                 }
             }
             // Start camera session (uses its own background queue internally)
@@ -160,14 +242,7 @@ struct LiveSessionView: View {
     }
     
     private var exerciseTitle: String {
-        switch exerciseType {
-        case .kneeFlexion:
-            return "Knee Flexion"
-        case .shoulderFlexion:
-            return "Shoulder Flexion"
-        case .sitToStand:
-            return "Sit to Stand"
-        }
+        return exerciseType.rawValue
     }
 }
 
@@ -446,29 +521,38 @@ class SessionManager: ObservableObject, @unchecked Sendable {
     
     private func requiredJointsSatisfied(landmarks: [Landmark]) -> Bool {
         switch exerciseType {
-        case .kneeFlexion, .sitToStand:
+        case .kneeFlexion, .sitToStand, .ankleFlexion, .hipFlexion:
             // Allow temporary occlusion during movement - require at least 4 of 6 key joints
             let keyJoints = [11, 12, 13, 14, 15, 16] // hips, knees, ankles
             let visibleCount = keyJoints.compactMap { idx in
                 idx < landmarks.count && landmarks[idx].isVisible ? 1 : nil
             }.count
             return visibleCount >= 4 // More lenient for occlusion
-        case .shoulderFlexion:
+        case .shoulderFlexion, .bicepCurl, .lateralArmRaise:
             // Allow temporary occlusion - require at least 5 of 8 key joints
             let keyJoints = [5, 6, 7, 8, 9, 10, 11, 12] // shoulders, elbows, wrists, hips
             let visibleCount = keyJoints.compactMap { idx in
                 idx < landmarks.count && landmarks[idx].isVisible ? 1 : nil
             }.count
             return visibleCount >= 5 // More lenient for occlusion
+        case .neckFlexion:
+            // Neck exercises need head and shoulder landmarks
+            let keyJoints = [0, 5, 6] // nose, shoulders
+            let visibleCount = keyJoints.compactMap { idx in
+                idx < landmarks.count && landmarks[idx].isVisible ? 1 : nil
+            }.count
+            return visibleCount >= 2
         }
     }
     
     private func requiredIndices() -> [Int] {
         switch exerciseType {
-        case .kneeFlexion, .sitToStand:
+        case .kneeFlexion, .sitToStand, .ankleFlexion, .hipFlexion:
             return [11, 12, 13, 14, 15, 16]
-        case .shoulderFlexion:
+        case .shoulderFlexion, .bicepCurl, .lateralArmRaise:
             return [5, 6, 7, 8, 9, 10, 11, 12]
+        case .neckFlexion:
+            return [0, 5, 6]
         }
     }
     
