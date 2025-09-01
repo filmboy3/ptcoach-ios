@@ -2,7 +2,6 @@ import AVFoundation
 import SwiftUI
 import Vision
 
-@MainActor
 class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
     @Published var session = AVCaptureSession()
     @Published var isSessionRunning = false
@@ -168,7 +167,7 @@ class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    nonisolated func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         currentPixelBuffer = pixelBuffer

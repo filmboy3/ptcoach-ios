@@ -33,9 +33,6 @@ class ExerciseProcessor: ObservableObject, @unchecked Sendable {
         self.angleCalculator = RobustAngleCalculator()
         self.stateMachine = RepCountingStateMachine(exercise: exercise)
         self.formAnalyzer = FormAnalyzer()
-        Task { @MainActor in
-            self.angleCalculator.updateAngles(calculatedAngles)
-        }
     }
     
     /// Process a single frame of pose landmarks
@@ -88,9 +85,6 @@ class ExerciseProcessor: ObservableObject, @unchecked Sendable {
             }
             
         case "neck":
-            Task { @MainActor in
-                self.formAnalyzer.updateFormAnalysis(angles: calculatedAngles, landmarks: landmarks)
-            }
             if let neckAngle = angleCalculator.calculateNeckFlexion(landmarks: landmarks) {
                 calculatedAngles["neck"] = neckAngle
             }

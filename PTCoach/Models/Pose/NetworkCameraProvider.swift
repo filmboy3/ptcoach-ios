@@ -43,13 +43,17 @@ class NetworkCameraProvider: ObservableObject, @unchecked Sendable {
                     DispatchQueue.main.async { [weak self] in
                         self?.isConnected = true
                     }
-                    self?.processImageData(data)
+                    Task { @MainActor in
+                        self?.processImageData(data)
+                    }
                 case .string(let text):
                     print("📱 Received text: \(text)")
                 @unknown default:
                     break
                 }
-                self?.receiveMessage() // Continue receiving
+                Task {
+                    await self?.receiveMessage() // Continue receiving
+                }
                 
             case .failure(let error):
                 print("❌ WebSocket error: \(error)")
