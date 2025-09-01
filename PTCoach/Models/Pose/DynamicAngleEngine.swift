@@ -121,7 +121,8 @@ struct Progressions: Codable {
 
 // MARK: - Enhanced Angle Engine for Dynamic Exercises
 
-class DynamicAngleEngine: ObservableObject {
+@MainActor
+class DynamicAngleEngine: ObservableObject, @unchecked Sendable {
     static let shared = DynamicAngleEngine()
     
     @Published var currentExercise: DynamicExercise?
@@ -606,29 +607,12 @@ class DynamicAngleEngine: ObservableObject {
     
     private func generateLLMFeedback() {
         // Generate contextual feedback using LLM
-        Task {
-            await llmCoach.generateFeedback(
-                exercise: currentExercise,
-                angle: currentAngle,
-                phase: currentPhase,
-                errors: detectedErrors,
-                repCount: repCount,
-                formScore: formScore
-            ) { [weak self] feedback in
-                DispatchQueue.main.async { [weak self] in
-                    self?.feedbackMessage = feedback
+        Task { @MainActor in
+            await llmCoach.generateFeedback(exercise: currentExercise, angle: currentAngle, phase: currentPhase, errors: detectedErrors, repCount: repCount, formScore: formScore) { feedback in
+                Task { @MainActor in
+                    self.feedbackMessage = feedback
                 }
             }
-        }
-    }
-    
-    private func storeAngleHistory(angle: CGFloat, timestamp: CFAbsoluteTime) {
-        let angleData = ["angle": angle, "timestamp": CGFloat(timestamp)]
-        jointAngleHistory.append(angleData)
-        
-        // Keep only recent history (last 100 data points)
-        if jointAngleHistory.count > 100 {
-            jointAngleHistory.removeFirst()
         }
     }
     
@@ -636,9 +620,10 @@ class DynamicAngleEngine: ObservableObject {
         // Play audio chime
         AudioServicesPlaySystemSound(SystemSoundID(1057))
         
-        // Haptic feedback
-        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-        impactFeedback.impactOccurred()
+        Task { @MainActor in
+            let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+            impactFeedback.impactOccurred()
+        }
         
         print("🔊 CHIME PLAYED - Rep increment sound triggered")
     }

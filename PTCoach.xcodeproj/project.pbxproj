@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -101,7 +101,7 @@
 		C9E6D8786CE97A0AA7A19509 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
 		CA62D0E5C86CF570FFF0882A /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		CCC17614930896829C0A2026 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
-		D1AE284EBAE6D866D2F82469 /* AlyssaRep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = AlyssaRep.m4a; sourceTree = "<group>"; };
+		D1AE284EBAE6D866D2F82469 /* AlyssaRep.m4a */ = {isa = PBXFileReference; path = AlyssaRep.m4a; sourceTree = "<group>"; };
 		D9CBE22B62AEC24DD4407759 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DABF2211042B53420B30CE23 /* YOLOExerciseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseModels.swift; sourceTree = "<group>"; };
 		DC16B5C04ACEDE508C1470F7 /* YOLOExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOExerciseManager.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		ED463CE2F7BFE189669F8AC6 /* TrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainView.swift; sourceTree = "<group>"; };
 		EEAD3EA68A12B1B226C2F280 /* ExerciseLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibrary.swift; sourceTree = "<group>"; };
 		F2075205F4BC48504D6875F0 /* DynamicAngleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAngleEngine.swift; sourceTree = "<group>"; };
-		F50D17AB2DCF97F01E63831E /* PTCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PTCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50D17AB2DCF97F01E63831E /* PTCoach.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PTCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F60B94354B52309244AB2F0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FD33B48C18A8B4C2625B15BD /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -303,6 +303,7 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					AAAFEE3E8D29B8015926DE0D = {
+						DevelopmentTeam = AUTOMATIC;
 						ProvisioningStyle = Automatic;
 					};
 					B06109A262C2A6439C7017D3 = {
@@ -322,6 +323,7 @@
 			);
 			mainGroup = 0E32CD0C7FA0672023C67E00;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -491,7 +493,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28UE768XAH;
+				DEVELOPMENT_TEAM = AUTOMATIC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PTCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -502,7 +504,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ptcoach.PTCoach;
 				SDKROOT = iphoneos;
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -591,7 +593,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28UE768XAH;
+				DEVELOPMENT_TEAM = AUTOMATIC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PTCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -602,7 +604,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ptcoach.PTCoach;
 				SDKROOT = iphoneos;
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -2,7 +2,8 @@ import AVFoundation
 import SwiftUI
 import Vision
 
-class CameraManager: NSObject, ObservableObject {
+@MainActor
+class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
     @Published var session = AVCaptureSession()
     @Published var isSessionRunning = false
     
@@ -69,10 +70,10 @@ class CameraManager: NSObject, ObservableObject {
             if !self.session.isRunning {
                 print("Starting camera session...")
                 self.session.startRunning()
-                DispatchQueue.main.async {
-                    self.isSessionRunning = self.session.isRunning
-                    print("Camera session running: \(self.session.isRunning)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isSessionRunning = self?.session.isRunning ?? false
                 }
+                print("Camera session running: \(self.session.isRunning)")
             }
         }
     }
@@ -82,8 +83,8 @@ class CameraManager: NSObject, ObservableObject {
             guard let self = self else { return }
             if self.session.isRunning {
                 self.session.stopRunning()
-                DispatchQueue.main.async {
-                    self.isSessionRunning = false
+                DispatchQueue.main.async { [weak self] in
+                    self?.isSessionRunning = false
                 }
             }
         }

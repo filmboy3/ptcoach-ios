@@ -1,7 +1,8 @@
 import Foundation
 
 /// Complete exercise processing pipeline integrating all components
-class ExerciseProcessor: ObservableObject {
+@MainActor
+class ExerciseProcessor: ObservableObject, @unchecked Sendable {
     
     @Published var currentAngles: [String: CGFloat] = [:]
     @Published var primaryAngle: CGFloat = 0
@@ -32,6 +33,9 @@ class ExerciseProcessor: ObservableObject {
         self.angleCalculator = RobustAngleCalculator()
         self.stateMachine = RepCountingStateMachine(exercise: exercise)
         self.formAnalyzer = FormAnalyzer()
+        Task { @MainActor in
+            self.angleCalculator.updateAngles(calculatedAngles)
+        }
     }
     
     /// Process a single frame of pose landmarks
@@ -84,6 +88,9 @@ class ExerciseProcessor: ObservableObject {
             }
             
         case "neck":
+            Task { @MainActor in
+                self.formAnalyzer.updateFormAnalysis(angles: calculatedAngles, landmarks: landmarks)
+            }
             if let neckAngle = angleCalculator.calculateNeckFlexion(landmarks: landmarks) {
                 calculatedAngles["neck"] = neckAngle
             }

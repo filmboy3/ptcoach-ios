@@ -11,7 +11,8 @@ struct ExerciseInfo {
     let jointType: String
 }
 
-class ExerciseLibrary {
+@MainActor
+class ExerciseLibrary: ObservableObject, @unchecked Sendable {
     static let shared = ExerciseLibrary()
     
     private(set) var availableExercises: [ExerciseInfo] = []

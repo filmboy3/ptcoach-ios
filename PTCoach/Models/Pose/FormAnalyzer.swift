@@ -1,7 +1,8 @@
 import Foundation
 
 /// Analyze exercise form and provide corrective feedback
-class FormAnalyzer: ObservableObject {
+@MainActor
+class FormAnalyzer: ObservableObject, @unchecked Sendable {
     
     @Published var currentFormScore: Float = 100.0
     @Published var formFeedback: [String] = []
@@ -86,10 +87,10 @@ class FormAnalyzer: ObservableObject {
         let filteredFeedback = filterFeedback(feedback)
         
         // Update published properties
-        DispatchQueue.main.async { [weak self] in
-            self?.currentFormScore = max(0, formScore)
-            self?.formFeedback = filteredFeedback
+        Task { @MainActor in
+            self.currentFormScore = formScore
         }
+        self.formFeedback = filteredFeedback
         
         return (max(0, formScore), filteredFeedback)
     }
@@ -116,8 +117,8 @@ class FormAnalyzer: ObservableObject {
         // This could be added when velocity tracking is implemented
         
         // Update published property
-        DispatchQueue.main.async { [weak self] in
-            self?.safetyWarnings = warnings
+        Task { @MainActor in
+            self.safetyWarnings = warnings
         }
         
         return warnings
@@ -246,7 +247,9 @@ class FormAnalyzer: ObservableObject {
             }
             
             filtered.append(message)
-            lastFeedbackTime[message] = currentTime
+            Task { @MainActor in
+                self.lastFeedbackTime[message] = currentTime
+            }
         }
         
         // Limit to top 2 most important feedback items

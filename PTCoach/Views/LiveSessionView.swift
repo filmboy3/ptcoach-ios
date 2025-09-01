@@ -149,7 +149,7 @@ struct LiveSessionView: View {
                 sessionManager.enqueueFrame(pixelBuffer)
             }
             DispatchQueue.global(qos: .background).async {
-                cameraManager.startSession()
+                await self.cameraManager.startSession()
             }
         }
         .onDisappear {
@@ -248,7 +248,8 @@ struct LandmarksOverlay: View {
 
 
 
-class SessionManager: ObservableObject {
+@MainActor
+class SessionManager: ObservableObject, @unchecked Sendable {
     @Published var repCount = 0
     @Published var currentAngle: CGFloat = 0
     @Published var maxAngle: CGFloat = 0

@@ -4,7 +4,8 @@ import UIKit
 import Network
 
 /// Network-based camera provider that streams from a nearby phone
-class NetworkCameraProvider: PoseProvider {
+@MainActor
+class NetworkCameraProvider: ObservableObject, @unchecked Sendable {
     private var webSocketTask: URLSessionWebSocketTask?
     private let session = URLSession.shared
     private var isConnected = false
@@ -39,6 +40,9 @@ class NetworkCameraProvider: PoseProvider {
             case .success(let message):
                 switch message {
                 case .data(let data):
+                    DispatchQueue.main.async { [weak self] in
+                        self?.isConnected = true
+                    }
                     self?.processImageData(data)
                 case .string(let text):
                     print("📱 Received text: \(text)")

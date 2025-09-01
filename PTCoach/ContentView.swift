@@ -213,7 +213,6 @@ struct TrackingPlaceholderView: View {
                             }
                         }
                     }
-                    }
                     
                     // Simplified HUD with exercise info and rep count
                     VStack(alignment: .leading, spacing: 12) {
@@ -353,7 +352,7 @@ struct TrackingPlaceholderView: View {
             }
             .onAppear {
                 cameraPosition = savedCameraPosition == "front" ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back
-                                // Connect pose detection to camera frames
+                // Connect pose detection to camera frames
                 cameraManager.setFrameHandler { pixelBuffer in
                     Task {
                         let detectedLandmarks = await poseProvider.detectPose(pixelBuffer: pixelBuffer)
@@ -413,7 +412,8 @@ struct TrackingPlaceholderView: View {
         
         switch status {
         case .authorized:
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.cameraManager.startSession()
                 self.cameraManager.switchCamera(to: self.cameraPosition)
                 self.showingCamera = true
@@ -421,15 +421,16 @@ struct TrackingPlaceholderView: View {
         case .notDetermined:
             let granted = await AVCaptureDevice.requestAccess(for: AVMediaType.video)
             if granted {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
                     self.cameraManager.startSession()
                     self.cameraManager.switchCamera(to: self.cameraPosition)
                     self.showingCamera = true
                 }
             }
         case .denied, .restricted:
-            DispatchQueue.main.async {
-                self.showPermissionAlert = true
+            DispatchQueue.main.async { [weak self] in
+                self?.showPermissionAlert = true
             }
         @unknown default:
             break

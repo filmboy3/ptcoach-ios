@@ -5,7 +5,8 @@ import CoreGraphics
 // MARK: - YOLO Exercise Manager
 
 /// Main manager for YOLO exercise dataset and real-time tracking
-class YOLOExerciseManager: ObservableObject {
+@MainActor
+class YOLOExerciseManager: ObservableObject, @unchecked Sendable {
     @Published var dataset: YOLOExerciseDataset?
     @Published var availableExercises: [YOLOExerciseReference] = []
     @Published var currentSession: ExerciseSession?
