@@ -146,6 +146,10 @@ class DynamicAngleEngine: ObservableObject, @unchecked Sendable {
     private var previousAngle: CGFloat = 0
     private var lastTimestamp: CFAbsoluteTime = 0
     
+    // Angle history for smoothing and analysis
+    private var angleHistory: [CGFloat] = []
+    private let maxHistorySize: Int = 120
+    
     // Rep gating state
     private var minAngleInFlexion: CGFloat = .greatestFiniteMagnitude
     private var flexionEnterTime: CFAbsoluteTime = 0

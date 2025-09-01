@@ -146,11 +146,12 @@ struct LiveSessionView: View {
             sessionManager.startSession(for: exerciseType)
             // Connect camera frames to session manager processing
             cameraManager.setFrameHandler { pixelBuffer in
-                sessionManager.enqueueFrame(pixelBuffer)
+                Task { @MainActor in
+                    sessionManager.enqueueFrame(pixelBuffer)
+                }
             }
-            DispatchQueue.global(qos: .background).async {
-                await self.cameraManager.startSession()
-            }
+            // Start camera session (uses its own background queue internally)
+            cameraManager.startSession()
         }
         .onDisappear {
             cameraManager.stopSession()
