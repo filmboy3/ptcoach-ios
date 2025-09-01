@@ -213,7 +213,10 @@ class DynamicAngleEngine: ObservableObject, @unchecked Sendable {
         generateLLMFeedback()
         
         // Store history
-        storeAngleHistory(angle: angle, timestamp: now)
+        angleHistory.append(angle)
+        if angleHistory.count > maxHistorySize {
+            angleHistory.removeFirst()
+        }
     }
     
     private func calculatePrimaryAngle(for exercise: DynamicExercise, landmarks: [Landmark]) -> CGFloat {

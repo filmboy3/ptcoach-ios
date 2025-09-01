@@ -412,8 +412,7 @@ struct TrackingPlaceholderView: View {
         
         switch status {
         case .authorized:
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+            DispatchQueue.main.async {
                 self.cameraManager.startSession()
                 self.cameraManager.switchCamera(to: self.cameraPosition)
                 self.showingCamera = true
@@ -421,16 +420,15 @@ struct TrackingPlaceholderView: View {
         case .notDetermined:
             let granted = await AVCaptureDevice.requestAccess(for: AVMediaType.video)
             if granted {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
+                DispatchQueue.main.async {
                     self.cameraManager.startSession()
                     self.cameraManager.switchCamera(to: self.cameraPosition)
                     self.showingCamera = true
                 }
             }
         case .denied, .restricted:
-            DispatchQueue.main.async { [weak self] in
-                self?.showPermissionAlert = true
+            DispatchQueue.main.async {
+                self.showPermissionAlert = true
             }
         @unknown default:
             break
