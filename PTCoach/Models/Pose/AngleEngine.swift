@@ -149,19 +149,36 @@ class AngleEngine: ObservableObject {
             return (leftKnee + rightKnee) / 2
             
         case .bicepCurl:
-            return EnhancedExerciseCalculator.calculateBicepCurl(landmarks: landmarks, side: .left)
+            // Bicep curl: shoulder-elbow-wrist angle (left side)
+            guard landmarks.count > 9 else { return 0 }
+            return Geometry.angle(landmarks[5].cgPoint, landmarks[7].cgPoint, landmarks[9].cgPoint)
             
         case .lateralArmRaise:
-            return EnhancedExerciseCalculator.calculateShoulderAbduction(landmarks: landmarks, side: .left)
+            // Lateral arm raise: shoulder abduction angle (left side)
+            guard landmarks.count > 11 else { return 0 }
+            let downDirection = CGPoint(x: landmarks[5].cgPoint.x, y: landmarks[5].cgPoint.y + 0.2)
+            return Geometry.angle(downDirection, landmarks[5].cgPoint, landmarks[7].cgPoint)
             
         case .ankleFlexion:
-            return EnhancedExerciseCalculator.calculateAnkleFlexion(landmarks: landmarks, side: .left)
+            // Ankle flexion: knee-ankle angle with estimated foot position
+            guard landmarks.count > 15 else { return 0 }
+            let footEstimate = CGPoint(x: landmarks[15].cgPoint.x, y: landmarks[15].cgPoint.y + 0.1)
+            return Geometry.angle(landmarks[13].cgPoint, landmarks[15].cgPoint, footEstimate)
             
         case .neckFlexion:
-            return EnhancedExerciseCalculator.calculateNeckFlexion(landmarks: landmarks)
+            // Neck flexion: nose to shoulder midpoint angle
+            guard landmarks.count > 6 else { return 0 }
+            let shoulderMidpoint = CGPoint(
+                x: (landmarks[5].cgPoint.x + landmarks[6].cgPoint.x) / 2,
+                y: (landmarks[5].cgPoint.y + landmarks[6].cgPoint.y) / 2
+            )
+            let neutralHead = CGPoint(x: shoulderMidpoint.x, y: shoulderMidpoint.y - 0.15)
+            return Geometry.angle(neutralHead, shoulderMidpoint, landmarks[0].cgPoint)
             
         case .hipFlexion:
-            return EnhancedExerciseCalculator.calculateHipFlexion(landmarks: landmarks, side: .left)
+            // Hip flexion: shoulder-hip-knee angle (left side)
+            guard landmarks.count > 13 else { return 0 }
+            return Geometry.angle(landmarks[5].cgPoint, landmarks[11].cgPoint, landmarks[13].cgPoint)
         }
     }
     
