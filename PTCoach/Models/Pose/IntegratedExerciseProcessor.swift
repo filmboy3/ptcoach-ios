@@ -1,6 +1,7 @@
 import Foundation
 import CoreGraphics
 import Combine
+import AVFoundation
 
 /// Integrated exercise processor that combines MoveNet, enhanced calculations, and advanced state machine
 class IntegratedExerciseProcessor: ObservableObject {

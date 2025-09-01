@@ -13,7 +13,7 @@ struct LiveSessionView: View {
     let exerciseType: ExerciseType
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var sessionManager = SessionManager()
-    @StateObject private var integratedProcessor = IntegratedExerciseProcessor()
+    // @StateObject private var integratedProcessor = IntegratedExerciseProcessor()
     @State private var showTestingInterface = false
     
     var body: some View {
@@ -84,7 +84,7 @@ struct LiveSessionView: View {
                             
                             Button("Reset") {
                                 sessionManager.reset()
-                                integratedProcessor.reset()
+                                // integratedProcessor.reset()
                             }
                             .padding()
                             .background(Color.red.opacity(0.8))
@@ -208,28 +208,28 @@ struct LiveSessionView: View {
             }
             
             // Enhanced Testing Interface Overlay
-            if showTestingInterface {
-                VStack {
-                    Spacer()
-                    ExerciseTestingView(integratedProcessor: integratedProcessor)
-                        .background(Color.black.opacity(0.9))
-                        .cornerRadius(12)
-                        .padding()
-                }
-                .transition(.move(edge: .bottom))
-                .animation(.easeInOut, value: showTestingInterface)
-            }
+            // if showTestingInterface {
+            //     VStack {
+            //         Spacer()
+            //         ExerciseTestingView(integratedProcessor: integratedProcessor)
+            //             .background(Color.black.opacity(0.9))
+            //             .cornerRadius(12)
+            //             .padding()
+            //     }
+            //     .transition(.move(edge: .bottom))
+            //     .animation(.easeInOut, value: showTestingInterface)
+            // }
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             sessionManager.startSession(for: exerciseType)
-            integratedProcessor.configureExercise(exerciseType)
+            // integratedProcessor.configureExercise(exerciseType)
             // Connect camera frames to both processors
             cameraManager.setFrameHandler { pixelBuffer in
                 Task { @MainActor in
                     sessionManager.enqueueFrame(pixelBuffer)
-                    await integratedProcessor.processFrame(pixelBuffer)
+                    // await integratedProcessor.processFrame(pixelBuffer)
                 }
             }
             // Start camera session (uses its own background queue internally)
