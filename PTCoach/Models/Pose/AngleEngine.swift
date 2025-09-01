@@ -58,6 +58,16 @@ class AngleEngine: ObservableObject {
         case .shoulderFlexion:
             // Shoulder flexion: angle decreases as arm raises (0° overhead, ~180° by side)
             return (enter: 150, exit: 90) // Enter flexion at 150°, exit when lowering to 90°
+        case .bicepCurl:
+            return (enter: 45, exit: 120) // Arm extended to arm flexed
+        case .lateralArmRaise:
+            return (enter: 15, exit: 85) // Arm at side to arm raised laterally
+        case .ankleFlexion:
+            return (enter: 90, exit: 60) // Ankle neutral to flexed
+        case .neckFlexion:
+            return (enter: 15, exit: 45) // Head neutral to flexed forward
+        case .hipFlexion:
+            return (enter: 160, exit: 90) // Leg extended to leg raised
         }
     }
     
@@ -137,6 +147,21 @@ class AngleEngine: ObservableObject {
                 ankle: landmarks[16]
             ) ?? 0
             return (leftKnee + rightKnee) / 2
+            
+        case .bicepCurl:
+            return EnhancedExerciseCalculator.calculateBicepCurl(landmarks: landmarks, side: .left)
+            
+        case .lateralArmRaise:
+            return EnhancedExerciseCalculator.calculateShoulderAbduction(landmarks: landmarks, side: .left)
+            
+        case .ankleFlexion:
+            return EnhancedExerciseCalculator.calculateAnkleFlexion(landmarks: landmarks, side: .left)
+            
+        case .neckFlexion:
+            return EnhancedExerciseCalculator.calculateNeckFlexion(landmarks: landmarks)
+            
+        case .hipFlexion:
+            return EnhancedExerciseCalculator.calculateHipFlexion(landmarks: landmarks, side: .left)
         }
     }
     
@@ -148,6 +173,16 @@ class AngleEngine: ObservableObject {
             return 120 // must reach <= 120° to confirm full sit
         case .shoulderFlexion:
             return 60 // must reach <= 60° overhead (shoulder flexion target)
+        case .bicepCurl:
+            return 120 // must reach >= 120° for full bicep curl
+        case .lateralArmRaise:
+            return 85 // must reach >= 85° for full lateral raise
+        case .ankleFlexion:
+            return 60 // must reach <= 60° for ankle flexion
+        case .neckFlexion:
+            return 45 // must reach >= 45° for neck flexion
+        case .hipFlexion:
+            return 90 // must reach <= 90° for hip flexion
         }
     }
     
@@ -205,6 +240,40 @@ class AngleEngine: ObservableObject {
             case .standing:
                 feedbackMessage = "Great! Now sit back down"
             }
+        case .bicepCurl:
+            if currentAngle > 100 {
+                feedbackMessage = "Great curl! Return to start"
+            } else if currentAngle < 60 {
+                feedbackMessage = "Curl your arm up"
+            } else {
+                feedbackMessage = "Keep going"
+            }
+        case .lateralArmRaise:
+            if currentAngle > 70 {
+                feedbackMessage = "Perfect raise! Lower slowly"
+            } else if currentAngle < 30 {
+                feedbackMessage = "Raise your arm out to the side"
+            } else {
+                feedbackMessage = "Continue raising"
+            }
+        case .ankleFlexion:
+            if currentAngle < 70 {
+                feedbackMessage = "Good flexion! Return to neutral"
+            } else {
+                feedbackMessage = "Flex your ankle up"
+            }
+        case .neckFlexion:
+            if currentAngle > 35 {
+                feedbackMessage = "Good flexion! Return to neutral"
+            } else {
+                feedbackMessage = "Gently nod your head forward"
+            }
+        case .hipFlexion:
+            if currentAngle < 100 {
+                feedbackMessage = "Great lift! Lower your leg"
+            } else {
+                feedbackMessage = "Lift your leg up"
+            }
         }
     }
     
@@ -231,6 +300,36 @@ class AngleEngine: ObservableObject {
                 idx < landmarks.count && landmarks[idx].confidence > 0.3 ? 1 : nil
             }.count
             return visibleCount >= 3 // At least 3 of 4 key joints
+        case .bicepCurl:
+            let keyJoints = [5, 7, 9] // left shoulder, elbow, wrist
+            let visibleCount = keyJoints.compactMap { idx in
+                idx < landmarks.count && landmarks[idx].confidence > 0.3 ? 1 : nil
+            }.count
+            return visibleCount >= 2 // At least 2 of 3 key joints
+        case .lateralArmRaise:
+            let keyJoints = [5, 7, 11] // left shoulder, elbow, hip
+            let visibleCount = keyJoints.compactMap { idx in
+                idx < landmarks.count && landmarks[idx].confidence > 0.3 ? 1 : nil
+            }.count
+            return visibleCount >= 2 // At least 2 of 3 key joints
+        case .ankleFlexion:
+            let keyJoints = [13, 15] // left knee, ankle
+            let visibleCount = keyJoints.compactMap { idx in
+                idx < landmarks.count && landmarks[idx].confidence > 0.3 ? 1 : nil
+            }.count
+            return visibleCount >= 2 // Both joints required
+        case .neckFlexion:
+            let keyJoints = [0, 5, 6] // nose, left shoulder, right shoulder
+            let visibleCount = keyJoints.compactMap { idx in
+                idx < landmarks.count && landmarks[idx].confidence > 0.3 ? 1 : nil
+            }.count
+            return visibleCount >= 2 // At least 2 of 3 key joints
+        case .hipFlexion:
+            let keyJoints = [5, 11, 13] // left shoulder, hip, knee
+            let visibleCount = keyJoints.compactMap { idx in
+                idx < landmarks.count && landmarks[idx].confidence > 0.3 ? 1 : nil
+            }.count
+            return visibleCount >= 2 // At least 2 of 3 key joints
         }
     }
 }
